@@ -10,7 +10,7 @@ import numpy as np
 
 fill_fraction = 0.8
 dim = 40 #size of NxN grid
-happiness_threshold = 0.3
+happiness_threshold = 0.2
 neighbourhood_size = 1
 
 
@@ -32,11 +32,14 @@ class Canvas:
         
     def check_neighbourhood(self, row, col): #returns list of how many plus and minus and blank there are.
         total_list = [0,0,0] #(minus, plus, empty)
+
         if self.canvas[row,col] == -1:
             total_list[0] = -1
             #stops it counting itself 
-        else:
+        elif self.canvas[row, col] == 1:
             total_list[1] = -1
+        elif self.canvas[row, col] == 0:
+            raise ValueError('Cant check empty square')
         neighbourhood = self.canvas[row - self.neighbourhood_size: row + self.neighbourhood_size, col - self.neighbourhood_size:col+self.neighbourhood_size]
         for x in neighbourhood:
             for y in x:
@@ -60,7 +63,7 @@ class Canvas:
     def update(self):
         for (row, col), n in np.ndenumerate(self.canvas):
             #print(self.canvas)
-            print(f'{row, col} ---------')
+            #print(f'{row, col} ---------')
             if self.canvas[row, col] != 0: #don't check empty squares
                 percentage = self.get_percentage(row, col)
                 if percentage < self.happiness_threshold: #unhappy so move
@@ -70,12 +73,12 @@ class Canvas:
                             empty_squares += [(row3,col3)]
                     for x in empty_squares: #find empty square to move to 
                         row2, col2= random.choice(empty_squares)
-                        print(f'row 2:{row2, col2}, row 1:{row, col}')
+                        #print(f'row 2:{row2, col2}, row 1:{row, col}')
                         percentage = self.get_percentage(row2,col2)
                         if percentage > self.happiness_threshold:
                             self.canvas[row2][col2] = self.canvas[row, col]
                             self.canvas[row][col] = 0
-                            print(f'Moved from {row, col} to {row2, col2}')
+                            #print(f'Moved from {row, col} to {row2, col2}')
                             break
                         else:
                             print('repeat')
@@ -85,7 +88,7 @@ class Canvas:
         plt.axis('image')
         plt.axis([0,self.dim,0,self.dim])
         plt.pcolor(self.canvas, cmap=cmap, edgecolors = 'w', linewidths = 1)
-        filename = "ShellingPics/Shelling"+"{:03d}".format(n)+".png"
+        filename = "ShellingPics/20PercentHappiness,"+"{:03d}".format(n)+".png"
         plt.savefig(filename)
 
 #def initialise(dim, fill_fraction, happiness_threshold, neighbourhood_size):
@@ -99,5 +102,7 @@ if __name__ == '__main__':
     for i in range(10):
         canvas.update()
         canvas.observe(i)
+    
+    print('done')
 
     #pycxsimulator.GUI().start(func = [canvas,canvas.observe, canvas.update])
