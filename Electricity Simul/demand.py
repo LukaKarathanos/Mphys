@@ -1,3 +1,6 @@
+import mesa
+
+
 '''
 agent that sets the demand. implement later. 
 Daily demand, varies alot - yearly demand remains constant. 
@@ -16,4 +19,7 @@ Currently, list of average demands in MW
 #         40000, 35000, 30000, 25000]
 
 
-hourly_demand_MW = [10000, 200000, 15000]
+hourly_demand_MW = [15000, 30000, 20000]
+
+class Demand(mesa.Agent):
+    pass

@@ -5,9 +5,11 @@ import random
 @dataclass(order = True)
 class PowerPlant(ABC): 
 
-    sort_index: int = field(init=False)
+    sort_index: float = field(init=False)
     name: str
-    capacity_MW: float = 800
+    plant_type: str
+    capacity_MW: float
+    construction_length: int
     construction_date: int = 2022
     operational_length_years: float = 40
     variable_costs_per_MWH: float = 100
@@ -17,7 +19,9 @@ class PowerPlant(ABC):
         self.sort_index = self.variable_costs_per_MWH
     '''
     name - plant name
+    plant type -  the type of plant
     capacity - plant capacity in MW
+    construction length - how many years takes to build
     construction date - year plant started operation
     operational_length - how long until plant needs to be shutdown
     variable_costs - cost to produce per MW - depends on fuel, need to implement 
