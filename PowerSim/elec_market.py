@@ -18,7 +18,7 @@ class Market:
     
     def fill_demand(self, demand:float, plants: list[plants.PowerPlant]) -> tuple[float, list]:
         '''
-        returns the strike price and the list of powerplants that were selected. Cannot do partional bids, so will buy more
+        returns the strike price and the list of powerplants that were selected. plants must be ordered. Cannot do partional bids, so will buy more
         than demand -> implement later 
         '''
         total_bought = 0

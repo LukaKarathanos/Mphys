@@ -2,10 +2,11 @@ import random
 import plants
 import pickle
 
-''' generate the data for the power plants '''
 
 
 def generate_plants(type_name: str,) -> list:
+    ''' generate the data for the power plants '''
+
     list_of_plants = []
     for i in range(20):
         var_costs_gas = random.uniform(60, 80)

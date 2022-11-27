@@ -21,5 +21,7 @@ Currently, list of average demands in MW
 
 hourly_demand_MW = [15000, 30000, 20000]
 
-class Demand(mesa.Agent):
-    pass
+class DemandAgent(mesa.Agent):
+    def __init__(self, hourly_demand_MW: list):
+        self.hourly_demand_MW = hourly_demand_MW
+
