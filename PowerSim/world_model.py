@@ -1,11 +1,10 @@
 import numpy as np
-from demand import hourly_demand_MW
 from electricity_company import ElecCo
 import data
 import mesa
 import elec_market
 import plants
-from demand import DemandAgent
+from demand import DemandAgent, hourly_demand_MW
 import itertools
 
 class WorldModel(mesa.Model):
@@ -15,6 +14,7 @@ class WorldModel(mesa.Model):
     defines step function
 
     Will create the instances of the elec companies and demand agents. 
+    Contains the world data which the other functions and classes use
     '''
     def __init__(
         self, 
@@ -23,7 +23,8 @@ class WorldModel(mesa.Model):
         init_year: int = 2022, 
         n_years: int = 30, 
         n_days: int = 4,
-        initial_hourly_demand: list = [],        
+        initial_hourly_demand: list = hourly_demand_MW,    
+        historical_strike_prices: list[float] = data.historical_price_data
         ):
 
         self.current_year = init_year
@@ -33,15 +34,17 @@ class WorldModel(mesa.Model):
         self.hourly_demand = initial_hourly_demand
         self.n_gen_cos = n_gen_cos
         self.plants = plants
+        self.historical_strike_prices = historical_strike_prices
+
 
         self.years_since_start = 0
-        self.average_yearly_prices = []
+        self.average_yearly_prices = historical_strike_prices
         self.all_strike_prices = []
         self.average_strike_price = 40.0
         # mesa scheduler. Activates each agent once per step, in random order. In future, do simultaneous activation
         self.schedule = mesa.time.RandomActivation(self)
         # initialise demand agent
-        self.demand = DemandAgent(self.initial_hourly_demand)
+        self.demand = DemandAgent(1, self)
         # initialise market
         self.market = elec_market.Market()
 
@@ -68,7 +71,8 @@ class WorldModel(mesa.Model):
         '''
         elec_cos = self.get_elec_cos()
         average_daily_prices = []
-        ''' For each day, sorts all powerplants by their bid, then uses the market to fill the demand'''
+
+        #For each day, sorts all powerplants by their bid, then uses the market to fill the demand
         for i in range(self.n_days):
             day_strike_prices = []
             for n, demand in enumerate(self.hourly_demand):
@@ -80,6 +84,9 @@ class WorldModel(mesa.Model):
             self.all_strike_prices.append(day_strike_prices)
             self.average_strike_price = sum(day_strike_prices)/len(day_strike_prices)
             average_daily_prices.append(self.average_strike_price)
-        self.schedule.step()    
+        self.average_yearly_prices.append(sum(average_daily_prices)/len(average_daily_prices))
+        self.schedule.step()
+        self.current_year += 1
+
 
         

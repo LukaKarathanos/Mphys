@@ -4,7 +4,7 @@ import mesa
 import plants
 import data
 from typing import Type
-import world_model
+#import world_model
 
 
 class ElecCo(mesa.Agent):
@@ -13,7 +13,7 @@ class ElecCo(mesa.Agent):
     to invest in -> not implemented. 
     Currently just choses whether to invest or not.  
     '''
-    def __init__(self, unique_id, model: world_model.WorldModel, name: str, power_plants:list[plants.PowerPlant], cash: float = 0):
+    def __init__(self, unique_id, model, name: str, power_plants:list[plants.PowerPlant], cash: float = 0):
         '''
         electricity company definition
         name: unique name 
@@ -56,8 +56,7 @@ class ElecCo(mesa.Agent):
             if (plant.operational_length_years + plant.construction_date) < current_year:
                 self.power_plants.remove(plant)
                 print(f'shutdown {plant}')
-
-        pass
+        
 
     def step(self): 
         '''
@@ -66,12 +65,18 @@ class ElecCo(mesa.Agent):
         Checks whether there are profitable plants, then choses to build one. The plant is then appended to the build queue. 
         '''
         strike_price = self.model.average_strike_price
+        self.shutdown_old(self.model.current_year)
         plant_to_build = self.invest(strike_price, data.buildable_plants)
-        if plant_to_build != None:
+        if plant_to_build is not None:
             plant_to_build.construction_date = self.model.current_year
             self.build_queue.append(plant_to_build)
             lcoe = plant_to_build.calculate_lcoe()
             print(f'Started building {plant_to_build} with lcoe {lcoe}')
+        for plant in self.build_queue:
+            if (plant.construction_date + plant.construction_length) <= self.model.current_year:
+                self.power_plants.append(plant)
+                self.build_queue.remove(plant)
+                print(f'finished building {plant}')
 
         
 

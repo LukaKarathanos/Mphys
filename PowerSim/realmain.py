@@ -36,7 +36,7 @@ plt.rcParams['axes.ymargin'] = 0
 def run():
     #initialise world
     world = WorldModel(
-            n_gen_cos = 1,
+            n_gen_cos = 2,
             plants = data.list_of_plants,
             n_years = 30
     )
@@ -49,7 +49,8 @@ def run():
         #The plot -> configured properly
     
     fig, ax = plt.subplots()
-    ax.plot(range(world.n_years), world.average_yearly_prices)
+    ax.plot(range(world.n_years), world.average_yearly_prices[5:])
+    #have to remove the historical data from the plot
     ax.set_ylabel('Average price per MWh (£)')
     ax.set_xlabel('Year')
     ax.xaxis.set_minor_locator(AutoMinorLocator())
@@ -58,7 +59,7 @@ def run():
     # ax.set_ylim(min(average_yearly_strike_prices) - 5, (max(average_yearly_strike_prices) + 5))
     ax.spines.right.set_visible(False)
     ax.spines.top.set_visible(False)
-    plt.show
+    plt.show()
 
 
 
