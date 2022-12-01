@@ -44,6 +44,7 @@ def run():
     world.initialise_gen_cos()
     for i in range(world.n_years):
         world.world_step()
+        print(world.hourly_demand)
 
 
         #The plot -> configured properly
