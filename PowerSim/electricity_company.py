@@ -6,8 +6,9 @@ import data
 
 
 #import world_model
-import predictor
+from predictor import ForecastSpotPrice
 from plants import PowerPlant
+from investing import ProfitCalculator
 
 class ElecCo(mesa.Agent):
     '''
@@ -30,16 +31,23 @@ class ElecCo(mesa.Agent):
         self.build_queue:list[PowerPlant] = []
         self.model = model
 
-    def invest_better(self, predicted_prices: list[float], buildable_plants: list[PowerPlant]):
-        ''' Uses a predicted electricity price per year to invest'''
+    def invest_better(self, predicted_prices: np.ndarray, buildable_plants: list[PowerPlant]):
+        ''' Uses a predicted electricity price per year to invest. '''
         viable_plants: list[PowerPlant] = []
         for plant in buildable_plants:
-            pass
+            npv = ProfitCalculator.calculate_npv(plant, predicted_prices)
+            if npv > 0:
+                viable_plants.append(plant)
+        if len(viable_plants) != 0:
+            return random.choice(viable_plants)
+        else:
+            print('no viable plants') 
+            return None
 
     def invest_primitive(self, strike_price: float, buildable_plants: list[PowerPlant]):
         '''
         If plant lcoe is lower than strike price, build it.
-        In future, ,ore checks whether it would be profitable and choose the best one to build    
+        In future, more checks whether it would be profitable and choose the best one to build    
         '''
         viable_plants: list[PowerPlant] = []
         for plant in buildable_plants:
@@ -76,7 +84,8 @@ class ElecCo(mesa.Agent):
         '''
         strike_price = self.model.average_strike_price
         self.shutdown_old(self.model.current_year)
-        plant_to_build = self.invest_primitive(strike_price, data.buildable_plants)
+        predicted_prices = ForecastSpotPrice.historical(self.model.average_yearly_prices)
+        plant_to_build = self.invest_better(predicted_prices, data.buildable_plants)
         if plant_to_build is not None:
             plant_to_build.construction_date = self.model.current_year
             self.build_queue.append(plant_to_build)

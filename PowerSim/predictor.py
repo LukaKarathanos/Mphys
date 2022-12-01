@@ -11,18 +11,18 @@ class ForecastSpotPrice:
     ''' Class to forecast the price'''
     def __init__(self, model: 'world_model.WorldModel'):
         self.model = model
-        self.historical_strike_prices = model.average_yearly_prices
-        
-    def historical(self, lookback_time: int = 5, lookforward_time: int = 20):
+
+    @staticmethod
+    def historical(historical_strike_prices: list, lookback_time: int = 5, lookforward_time: int = 20) -> np.ndarray:
         ''' Uses linear regression of historical data over the lookback time
         to forecast the spot price.'''
-        prices = self.historical_strike_prices[-lookback_time:]
+        prices = historical_strike_prices[-lookback_time:]
         y = np.array(prices)
         x = np.arange(-5,0).reshape((-1, 1))
         linreg = LinearRegression().fit(x,y)
         r_sq = linreg.score(x,y)
         print(r_sq)
-        predicted_future_prices = linreg.predict(np.arange(lookforward_time))
+        predicted_future_prices = linreg.predict(np.arange(lookforward_time).reshape(-1, 1))
         return predicted_future_prices
 
     def market(self):

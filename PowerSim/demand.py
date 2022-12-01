@@ -27,7 +27,7 @@ class DemandAgent(mesa.Agent):
         super().__init__(unique_id, model)
         self.hourly_demand_MW = np.array(hourly_demand_MW)
 
-    def increasing_demand(self, increase = 1.05):
+    def increasing_demand(self, increase = 1.02):
         self.hourly_demand_MW = increase*self.hourly_demand_MW
     
     def step(self):
