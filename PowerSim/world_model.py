@@ -19,7 +19,7 @@ class WorldModel(mesa.Model):
     def __init__(
         self, 
         n_gen_cos: int,
-        plants: list[plants.PowerPlant],
+        plants: list[list[plants.PowerPlant]],
         init_year: int = 2022, 
         n_years: int = 30, 
         n_days: int = 4,
@@ -53,7 +53,7 @@ class WorldModel(mesa.Model):
         Creates list of gen company agents all with the same plants. 
         ''' 
         for i in range(self.n_gen_cos):
-            co = ElecCo(i, self, f'Company:{i}', self.plants, cash = 5_000_000_000)
+            co = ElecCo(i, self, f'Company:{i}', self.plants[i], cash = 5_000_000_000)
             self.schedule.add(co)
 
     def get_elec_cos(self) -> list[ElecCo]:

@@ -31,8 +31,8 @@ def generate_plants(type_name: str,) -> list[plants.PowerPlant]:
         plant_list.append(new_plant)
     return plant_list
 
-
-list_of_plants = generate_plants('Initial')
+#plants for the initial eleccos to use. Must be longer than the number of elec cos
+list_of_plants = [generate_plants('Initial'), generate_plants('Initial'), generate_plants('Initial'), generate_plants('Initial')]
 
 
 

@@ -5,9 +5,10 @@ Daily demand, varies alot - yearly demand remains constant.
 just 1 day demand, per hour
 Currently, list of average demands in MW
 
-In future will simulate vehicle to grid to level out the demand. 
+In future will simulate vehicle to grid to level out the demand.
 '''
 import mesa
+import numpy as np
 
 #from world_model import WorldModel
 
@@ -22,9 +23,17 @@ hourly_demand_MW = [20000, 20000, 20000, 20000,
 # hourly_demand_MW = [15000, 30000, 20000]
 
 class DemandAgent(mesa.Agent):
-    ''' In future, the demand agent will change the demand with the model time.'''
-    def __init__(self, unique_id, model):
+    def __init__(self, unique_id, model: 'WorldModel' ):
         super().__init__(unique_id, model)
-        self.hourly_demand_MW = model.hourly_demand
+        self.hourly_demand_MW = np.array(model.hourly_demand)
+
+    def increasing_demand(self, increase = 1.05):
+        self.hourly_demand_MW = increase*self.hourly_demand_MW
+    
+    def step(self):
+        self.increasing_demand()
+
+
+
 
 

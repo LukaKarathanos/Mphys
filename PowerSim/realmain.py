@@ -36,7 +36,7 @@ plt.rcParams['axes.ymargin'] = 0
 def run():
     #initialise world
     world = WorldModel(
-            n_gen_cos = 2,
+            n_gen_cos = 3,
             plants = data.list_of_plants,
             n_years = 30
     )

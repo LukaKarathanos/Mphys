@@ -1,11 +1,13 @@
 import numpy as np
 import random
 import mesa
-import plants
 import data
-from typing import Type
-#import world_model
 
+
+
+#import world_model
+import predictor
+from plants import PowerPlant
 
 class ElecCo(mesa.Agent):
     '''
@@ -13,32 +15,40 @@ class ElecCo(mesa.Agent):
     to invest in -> not implemented. 
     Currently just choses whether to invest or not.  
     '''
-    def __init__(self, unique_id, model, name: str, power_plants:list[plants.PowerPlant], cash: float = 0):
+    def __init__(self, unique_id, model, name: str, power_plants:list[PowerPlant], cash: float = 0):
         '''
         electricity company definition
         name: unique name 
         initial_plants: power plants that it is initialised with
-        cash: amount of money it starts with
+        cash: amount of free cash it starts with. Used to pay downpayments for the powerplants
+
         '''
         super().__init__(unique_id, model)
         self.name = name
         self.power_plants = power_plants
         self.cash = cash
-        self.build_queue:list[plants.PowerPlant] = []
+        self.build_queue:list[PowerPlant] = []
         self.model = model
 
+    def invest_better(self, predicted_prices: list[float], buildable_plants: list[PowerPlant]):
+        ''' Uses a predicted electricity price per year to invest'''
+        viable_plants: list[PowerPlant] = []
+        for plant in buildable_plants:
+            pass
 
-    def invest(self, strike_price: float, buildable_plants: list[plants.PowerPlant]):
+    def invest_primitive(self, strike_price: float, buildable_plants: list[PowerPlant]):
         '''
         If plant lcoe is lower than strike price, build it.
         In future, ,ore checks whether it would be profitable and choose the best one to build    
         '''
-        viable_plants: list[plants.PowerPlant] = []
+        viable_plants: list[PowerPlant] = []
         for plant in buildable_plants:
             if strike_price > plant.calculate_lcoe():
                 viable_plants.append(plant)
         if len(viable_plants) != 0:
             return random.choice(viable_plants)
+        else:
+            return None
 
         
     def shutdown_unprofitable(self):
@@ -66,7 +76,7 @@ class ElecCo(mesa.Agent):
         '''
         strike_price = self.model.average_strike_price
         self.shutdown_old(self.model.current_year)
-        plant_to_build = self.invest(strike_price, data.buildable_plants)
+        plant_to_build = self.invest_primitive(strike_price, data.buildable_plants)
         if plant_to_build is not None:
             plant_to_build.construction_date = self.model.current_year
             self.build_queue.append(plant_to_build)
