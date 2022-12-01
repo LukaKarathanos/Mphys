@@ -13,15 +13,15 @@ class WorldModel(mesa.Model):
     Sets the initial parameters
     defines step function
 
-    Will create the instances of the elec companies and demand agents. 
+    Will create the instances of the elec companies and demand agents.
     Contains the world data which the other functions and classes use
     '''
     def __init__(
         self, 
         n_gen_cos: int,
         plants: list[list[plants.PowerPlant]],
-        init_year: int = 2022, 
-        n_years: int = 30, 
+        init_year: int = 2022,
+        n_years: int = 30,
         n_days: int = 4,
         initial_hourly_demand: list = hourly_demand_MW,    
         historical_strike_prices: list[float] = data.historical_price_data
@@ -31,7 +31,6 @@ class WorldModel(mesa.Model):
         self.n_years = n_years
         self.n_days = n_days
         self.initial_hourly_demand = initial_hourly_demand
-        self.hourly_demand = initial_hourly_demand
         self.n_gen_cos = n_gen_cos
         self.plants = plants
         self.historical_strike_prices = historical_strike_prices
@@ -44,14 +43,15 @@ class WorldModel(mesa.Model):
         # mesa scheduler. Activates each agent once per step, in random order. In future, do simultaneous activation
         self.schedule = mesa.time.RandomActivation(self)
         # initialise demand agent
-        self.demand = DemandAgent(1, self)
+        self.demand = DemandAgent(1, self, initial_hourly_demand)
+        self.hourly_demand = self.demand.hourly_demand_MW
         # initialise market
         self.market = elec_market.Market()
 
     def initialise_gen_cos(self):
-        ''' 
-        Creates list of gen company agents all with the same plants. 
-        ''' 
+        '''
+        Creates list of gen company agents all with the same plants.
+        '''
         for i in range(self.n_gen_cos):
             co = ElecCo(i, self, f'Company:{i}', self.plants[i], cash = 5_000_000_000)
             self.schedule.add(co)
@@ -85,6 +85,9 @@ class WorldModel(mesa.Model):
             self.average_strike_price = sum(day_strike_prices)/len(day_strike_prices)
             average_daily_prices.append(self.average_strike_price)
         self.average_yearly_prices.append(sum(average_daily_prices)/len(average_daily_prices))
+        
+        self.demand.step()
+        self.hourly_demand = self.get_demand()
         self.schedule.step()
         self.current_year += 1
 

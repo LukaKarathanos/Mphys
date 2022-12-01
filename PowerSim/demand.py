@@ -23,9 +23,9 @@ hourly_demand_MW = [20000, 20000, 20000, 20000,
 # hourly_demand_MW = [15000, 30000, 20000]
 
 class DemandAgent(mesa.Agent):
-    def __init__(self, unique_id, model: 'WorldModel' ):
+    def __init__(self, unique_id, model: 'WorldModel', hourly_demand_MW: list[float]):
         super().__init__(unique_id, model)
-        self.hourly_demand_MW = np.array(model.hourly_demand)
+        self.hourly_demand_MW = np.array(hourly_demand_MW)
 
     def increasing_demand(self, increase = 1.05):
         self.hourly_demand_MW = increase*self.hourly_demand_MW
