@@ -19,9 +19,10 @@ class PowerPlant(ABC):
     '''
     sort_index: float = field(init=False)
     name: str
-    plant_type: str
+    technology: str
+    company: str
     capacity_MW: float
-    construction_length: int
+    construction_length: int = 5
     construction_date: int = 2022
     operational_length_years: float = 40
     variable_costs_per_MWH: float = 100
@@ -42,7 +43,17 @@ class PowerPlant(ABC):
         lcoe = (self.build_costs + total_variable_costs + total_fixed_costs)/(self.capacity_MW*self.operational_length_years*8766)
         return lcoe
     
-
+    def get_variable_costs(self):
+        ''' Using the plant type calculate the variable costs'''
+        if self.technology is 'Fossil Fuel':
+            '''Cost of fuel. Future add a little variation based on size maybe '''
+            self.variable_costs_per_MWH = 50
+        elif self.technology is 'Bioenergy':
+            ''' cost of biomass'''
+            self.variable_costs_per_MWH = 40
+        else:
+            ''' others have zero srmc '''
+            self.variable_costs_per_MWH = 0.0
 
 # @dataclass(order=True)
 # class FuelPowerPlant(PowerPlant):

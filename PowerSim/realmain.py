@@ -30,14 +30,16 @@ plt.rcParams['legend.handlelength'] = lhandle
 plt.rcParams['axes.autolimit_mode'] = 'round_numbers'
 plt.rcParams['axes.xmargin'] = 0
 plt.rcParams['axes.ymargin'] = 0
+plt.tight_layout()
 
 
 
 def run():
     #initialise world
+    list_of_plants = data.generate_plants_from_data(data.df)
     world = WorldModel(
             n_gen_cos = 3,
-            plants = data.list_of_plants,
+            plants = list_of_plants,
             n_years = 30
     )
 

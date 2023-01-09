@@ -19,7 +19,7 @@ class WorldModel(mesa.Model):
     def __init__(
         self, 
         n_gen_cos: int,
-        plants: list[list[plants.PowerPlant]],
+        plants: list[plants.PowerPlant],
         init_year: int = 2022,
         n_years: int = 30,
         n_days: int = 4,
@@ -50,10 +50,10 @@ class WorldModel(mesa.Model):
 
     def initialise_gen_cos(self):
         '''
-        Creates list of gen company agents all with the same plants.
+        Using data from Data, initialise different gen_cos using the plants assossiciated with them. Linked to the dataframe which is bad
         '''
-        for i in range(self.n_gen_cos):
-            co = ElecCo(i, self, f'Company:{i}', self.plants[i], cash = 5_000_000_000)
+        for i, company_name in enumerate(set(data.df.company_name)):
+            co = ElecCo(i, self, company_name, [plant for plant in self.plants if plant.company is company_name], cash = 5_000_000_000)
             self.schedule.add(co)
 
     def get_elec_cos(self) -> list[ElecCo]:
@@ -74,7 +74,7 @@ class WorldModel(mesa.Model):
 
         #For each day, sorts all powerplants by their bid, then uses the market to fill the demand
         for i in range(self.n_days):
-            day_strike_prices = []
+            day_strike_prices = [] 
             for n, demand in enumerate(self.hourly_demand):
                 ps = [elec_co.power_plants for elec_co in elec_cos]
                 ps = list(itertools.chain.from_iterable(ps))
