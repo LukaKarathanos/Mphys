@@ -10,7 +10,9 @@ class ProfitCalculator:
 
     @staticmethod
     def calculate_npv(plant:PowerPlant, forecast_average_prices: np.ndarray, discount_rate: float = 0.05) -> float:
-        ''' Using forecast yearly electricity costs, calculate the expected profit of the plants. Assumes plant always runs. '''
+        ''' Using forecast yearly electricity costs, calculate the expected profit of the plants. Assumes plant always runs. 
+        Need to change.
+        '''
         lcoe = plant.calculate_lcoe()
         cash_flow = forecast_average_prices*8760.25*plant.capacity_MW - lcoe
         cash_flow = np.insert(cash_flow, 0, -plant.build_costs)

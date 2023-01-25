@@ -36,7 +36,7 @@ plt.tight_layout()
 
 def run():
     #initialise world
-    list_of_plants = data.generate_plants_from_data(data.df)
+    list_of_plants = data.generate_plants_from_data(data.DUKES_plants_df)
     world = WorldModel(
             n_gen_cos = 3,
             plants = list_of_plants,
@@ -70,4 +70,5 @@ def run():
 #%%
 if __name__ == '__main__':
     run()
+
 # %%

@@ -21,7 +21,7 @@ class ForecastSpotPrice:
         x = np.arange(-5,0).reshape((-1, 1))
         linreg = LinearRegression().fit(x,y)
         r_sq = linreg.score(x,y)
-        print(r_sq)
+        #print(r_sq)
         predicted_future_prices = linreg.predict(np.arange(lookforward_time).reshape(-1, 1))
         return predicted_future_prices
 

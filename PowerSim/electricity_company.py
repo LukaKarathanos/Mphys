@@ -47,7 +47,8 @@ class ElecCo(mesa.Agent):
     def invest_primitive(self, strike_price: float, buildable_plants: list[PowerPlant]):
         '''
         If plant lcoe is lower than strike price, build it.
-        In future, more checks whether it would be profitable and choose the best one to build    
+        In future, more checks whether it would be profitable and choose the best one to build.
+                
         '''
         viable_plants: list[PowerPlant] = []
         for plant in buildable_plants:
@@ -73,7 +74,7 @@ class ElecCo(mesa.Agent):
         for plant in self.power_plants:
             if (plant.operational_length_years + plant.construction_date) < current_year:
                 self.power_plants.remove(plant)
-                print(f'shutdown {plant}')
+                #print(f'shutdown {plant}')
         
 
     def step(self): 
@@ -88,14 +89,15 @@ class ElecCo(mesa.Agent):
         plant_to_build = self.invest_better(predicted_prices, data.buildable_plants)
         if plant_to_build is not None:
             plant_to_build.construction_date = self.model.current_year
+            plant_to_build.company = self.name
             self.build_queue.append(plant_to_build)
             lcoe = plant_to_build.calculate_lcoe()
-            print(f'Started building {plant_to_build} with lcoe {lcoe}')
+            #print(f'Started building {plant_to_build} with lcoe {lcoe}')
         for plant in self.build_queue:
             if (plant.construction_date + plant.construction_length) <= self.model.current_year:
                 self.power_plants.append(plant)
                 self.build_queue.remove(plant)
-                print(f'finished building {plant}')
+                #print(f'finished building {plant}')
 
         
 

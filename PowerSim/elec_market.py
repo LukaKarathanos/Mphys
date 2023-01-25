@@ -24,22 +24,23 @@ class Market:
     def fill_demand(self, demand:float, plants_to_fill: list[plants.PowerPlant]) -> tuple[float, list]:
         '''
         returns the strike price and the list of powerplants that were selected.
-        plants must be ordered. Cannot do partional bids, so will buy more than demand -> implement later.
+        plants must be ordered.
         '''
         total_bought = 0
         strike_price = 0
         bids = []
         plants_selected = []
         for plant in plants_to_fill:
-            bid = plant.variable_costs_per_MWH
-            if total_bought + plant.capacity_MW >= demand:
+            bid_price = plant.variable_costs_per_MWH
+            gen_amount = plant.load_factor*plant.capacity_MW
+            if total_bought + gen_amount >= demand:
                 #fractional bid
                 total_bought += demand - total_bought
-                bids.append(bid)
+                bids.append(bid_price)
                 break
             else:
-                bids.append(bid)
-                total_bought += plant.capacity_MW
+                bids.append(bid_price)
+                total_bought += gen_amount
             strike_price = bids[-1]
             plants_selected += [plant]
 

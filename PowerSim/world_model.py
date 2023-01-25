@@ -5,6 +5,7 @@ import mesa
 import elec_market
 import plants
 from demand import DemandAgent, hourly_demand_MW
+
 import itertools
 
 class WorldModel(mesa.Model):
@@ -52,7 +53,7 @@ class WorldModel(mesa.Model):
         '''
         Using data from Data, initialise different gen_cos using the plants assossiciated with them. Linked to the dataframe which is bad
         '''
-        for i, company_name in enumerate(set(data.df.company_name)):
+        for i, company_name in enumerate(set(data.DUKES_plants_df.company_name)):
             co = ElecCo(i, self, company_name, [plant for plant in self.plants if plant.company is company_name], cash = 5_000_000_000)
             self.schedule.add(co)
 
@@ -61,7 +62,7 @@ class WorldModel(mesa.Model):
         return elec_cos
 
     def get_demand(self) -> list:
-        hourly_demand = self.demand.hourly_demand_MW
+        hourly_demand = self.demand.get_daily_demand()
         return hourly_demand
 
     def world_step(self):
@@ -71,6 +72,7 @@ class WorldModel(mesa.Model):
         '''
         elec_cos = self.get_elec_cos()
         average_daily_prices = []
+        self.hourly_demand = self.get_demand()
 
         #For each day, sorts all powerplants by their bid, then uses the market to fill the demand
         for i in range(self.n_days):
@@ -78,7 +80,9 @@ class WorldModel(mesa.Model):
             for n, demand in enumerate(self.hourly_demand):
                 ps = [elec_co.power_plants for elec_co in elec_cos]
                 ps = list(itertools.chain.from_iterable(ps))
-                ps.sort()
+                for p in ps:
+                    p.variable_costs_per_MWH = p.get_variable_costs()
+                ps.sort(key = lambda x: x.variable_costs_per_MWH)
                 price, plants_selected = self.market.fill_demand(demand, ps)
                 day_strike_prices.append(price)
             self.all_strike_prices.append(day_strike_prices)
@@ -87,7 +91,6 @@ class WorldModel(mesa.Model):
         self.average_yearly_prices.append(sum(average_daily_prices)/len(average_daily_prices))
         
         self.demand.step()
-        self.hourly_demand = self.get_demand()
         self.schedule.step()
         self.current_year += 1
 
