@@ -50,9 +50,9 @@ class PowerPlant(ABC):
         Price electricity needs to be to turn a profit. implement proper equation late with discount rate.  
         '''
 
-        total_variable_costs = self.operational_length_years*8766*self.get_variable_costs()*self.capacity_MW 
+        total_variable_costs = self.operational_length_years*8766*self.get_variable_costs()*self.capacity_MW*self.load_factor 
         total_fixed_costs = self.operational_length_years*8766*self.fixed_costs_per_H
-        lcoe = (self.build_costs + total_variable_costs + total_fixed_costs)/(self.capacity_MW*self.operational_length_years*8766)
+        lcoe = (self.build_costs + total_variable_costs + total_fixed_costs)/(self.capacity_MW*self.load_factor*self.operational_length_years*8766)
         return lcoe
     
     def get_variable_costs(self) -> float:
@@ -61,22 +61,22 @@ class PowerPlant(ABC):
             '''
             Generic fossil fuel
             Cost of fuel. Future add a little variation based on size maybe '''
-            self.variable_costs_per_MWH = 100
-            return 50
+            c = 80
+            return c
 
         elif self.technology == 'CCGT':
             c = fuel_costs.gas_price*1/self.fuel_effeciency + self.variable_maintenance_per_MWh
-            self.variable_costs_per_MWH = c
             return c
         elif self.technology == 'Bioenergy':
             ''' cost of biomass'''
-            c= fuel_costs.biomass_cost*1/self.fuel_effeciency  + self.variable_maintenance_per_MWh
-            self.variable_costs_per_MWH  = c
+            c= fuel_costs.biomass_price*1/self.fuel_effeciency  + self.variable_maintenance_per_MWh
+            return c
+        elif self.technology == 'Coal':
+            c = fuel_costs.coal_price*1/self.fuel_effeciency + self.variable_maintenance_per_MWh
             return c
         else:
             ''' others have no fuel cost '''
             c =  self.variable_maintenance_per_MWh
-            self.variable_costs_per_MWH = c
             return c
             
 

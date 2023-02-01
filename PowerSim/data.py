@@ -60,16 +60,14 @@ import plants
 
 historical_price_data = [70.0, 70.0, 70.0, 70.0, 70.0]
 
-DUKES_plants_df = pd.read_excel(r'C:\Users\LukaK\OneDrive - Durham University\Projects\Agent based modelling easy\PowerSim\DUKES_5.11.xlsx',
-                        sheet_name='5.11 Full list cleaned'
-                        )
+DUKES_plants_df = pd.read_csv(r'C:\Users\LukaK\OneDrive - Durham University\Projects\Agent based modelling easy\PowerSim\DUKES_5.11.csv')
+DUKES_plants_df.dropna(axis=0,how='all',inplace=True)
 
-plant_costs_df = pd.read_excel(r'C:\Users\LukaK\OneDrive - Durham University\Projects\Agent based modelling easy\PowerSim\plant_cost_data.xlsx',
-                        sheet_name='Sheet2')
+plant_costs_df = pd.read_csv(r'C:\Users\LukaK\OneDrive - Durham University\Projects\Agent based modelling easy\PowerSim\plant_cost_data.csv')             
+plant_costs_df.dropna(axis=0, how='all', inplace=True)
 
-def generate_plants_from_data(data: pd.DataFrame) -> list[plants.PowerPlant]:
+def generate_plants_from_data(current_plant_database: pd.DataFrame, cost_d: pd.DataFrame) -> list[plants.PowerPlant]:
     ''' Generate plants from database.'''
-    df = plant_costs_df
     A = [
         plants.PowerPlant(
                         name=a.plant_name,
@@ -77,26 +75,25 @@ def generate_plants_from_data(data: pd.DataFrame) -> list[plants.PowerPlant]:
                         company = a.company_name,
                         capacity_MW=a.installed_capacity_MW,
                         construction_date=a.year_commissioned,  
-                        operational_length_years= ((df[df['Technology'] == a.Technology]).iloc[0]['operating_lifetime']+10), 
-                        fuel_effeciency = (df[df['Technology'] == a.Technology]).iloc[0]['fuel_effeciency'],
-                        build_costs= ((df[df['Technology'] == a.Technology]).iloc[0]['construction_cost_medium'] 
-                                    + (df[df['Technology'] == a.Technology]).iloc[0]['pre-development_cost_medium'])*a.installed_capacity_MW 
-                                    + (df[df['Technology'] == a.Technology]).iloc[0]['Infrastructure']*1000,
-                        construction_length= (df[df['Technology'] == a.Technology]).iloc[0]['total_construction_period'],
-                        fixed_costs_per_H= (df[df['Technology'] == a.Technology]).iloc[0]['fixed_maintenance_costs']*a.installed_capacity_MW/8760
-                                    + (df[df['Technology'] == a.Technology]).iloc[0]['Insurance']*a.installed_capacity_MW/8760      
-                                    + (df[df['Technology'] == a.Technology]).iloc[0]['connection_costs']*a.installed_capacity_MW/8760,
-                        variable_maintenance_per_MWh= (df[df['Technology'] == a.Technology]).iloc[0]['variable_maintenance'],
-                        load_factor = (df[df['Technology'] == a.Technology]).iloc[0]['load_factor']
+                        operational_length_years= ((cost_d[cost_d['Technology'] == a.Technology]).iloc[0]['operating_lifetime']+10), 
+                        fuel_effeciency = (cost_d[cost_d['Technology'] == a.Technology]).iloc[0]['fuel_effeciency'],
+                        build_costs = (((cost_d[cost_d['Technology'] == a.Technology]).iloc[0]['construction_cost_medium'] 
+                                    + (cost_d[cost_d['Technology'] == a.Technology]).iloc[0]['pre-development_cost_medium'])*a.installed_capacity_MW 
+                                    + (cost_d[cost_d['Technology'] == a.Technology]).iloc[0]['Infrastructure']*1000),
+                        construction_length= (cost_d[cost_d['Technology'] == a.Technology]).iloc[0]['total_construction_period'],
+                        fixed_costs_per_H= (cost_d[cost_d['Technology'] == a.Technology]).iloc[0]['fixed_maintenance_costs']*a.installed_capacity_MW/8760
+                                    + (cost_d[cost_d['Technology'] == a.Technology]).iloc[0]['Insurance']*a.installed_capacity_MW/8760      
+                                    + (cost_d[cost_d['Technology'] == a.Technology]).iloc[0]['connection_costs']*a.installed_capacity_MW/8760,
+                        variable_maintenance_per_MWh= (cost_d[cost_d['Technology'] == a.Technology]).iloc[0]['variable_maintenance'],
+                        load_factor = (cost_d[cost_d['Technology'] == a.Technology]).iloc[0]['load_factor']
         )
 
-        for a in data.itertuples()
+        for a in current_plant_database.itertuples()
     ]
     return A
 
-def generate_buildable_plants_from_data(data: pd.DataFrame) -> list[plants.PowerPlant]:
+def generate_buildable_plants_from_data(data: pd.DataFrame, cost_d: pd.DataFrame) -> list[plants.PowerPlant]:
     ''' Generate plants from database.'''
-    df = plant_costs_df
     A = [
         plants.PowerPlant(
                         name = f'Plant {a.Technology} number {i}',
@@ -104,17 +101,17 @@ def generate_buildable_plants_from_data(data: pd.DataFrame) -> list[plants.Power
                         technology=a.Technology,
                         capacity_MW=a.installed_capacity_MW,
                         construction_date=a.year_commissioned,  
-                        operational_length_years= ((df[df['Technology'] == a.Technology]).iloc[0]['operating_lifetime']+10), 
-                        fuel_effeciency = (df[df['Technology'] == a.Technology]).iloc[0]['fuel_effeciency'],
-                        build_costs= ((df[df['Technology'] == a.Technology]).iloc[0]['construction_cost_medium'] 
-                                    + (df[df['Technology'] == a.Technology]).iloc[0]['pre-development_cost_medium'])*a.installed_capacity_MW 
-                                    + (df[df['Technology'] == a.Technology]).iloc[0]['Infrastructure']*1000,
-                        construction_length= (df[df['Technology'] == a.Technology]).iloc[0]['total_construction_period'],
-                        fixed_costs_per_H= (df[df['Technology'] == a.Technology]).iloc[0]['fixed_maintenance_costs']*a.installed_capacity_MW/8760
-                                    + (df[df['Technology'] == a.Technology]).iloc[0]['Insurance']*a.installed_capacity_MW/8760      
-                                    + (df[df['Technology'] == a.Technology]).iloc[0]['connection_costs']*a.installed_capacity_MW/8760,
-                        variable_maintenance_per_MWh= (df[df['Technology'] == a.Technology]).iloc[0]['variable_maintenance'],
-                        load_factor = (df[df['Technology'] == a.Technology]).iloc[0]['load_factor']
+                        operational_length_years= ((cost_d[cost_d['Technology'] == a.Technology]).iloc[0]['operating_lifetime']+10), 
+                        fuel_effeciency = (cost_d[cost_d['Technology'] == a.Technology]).iloc[0]['fuel_effeciency'],
+                        build_costs= ((cost_d[cost_d['Technology'] == a.Technology]).iloc[0]['construction_cost_medium'] 
+                                    + (cost_d[cost_d['Technology'] == a.Technology]).iloc[0]['pre-development_cost_medium'])*a.installed_capacity_MW 
+                                    + (cost_d[cost_d['Technology'] == a.Technology]).iloc[0]['Infrastructure']*1000,
+                        construction_length= (cost_d[cost_d['Technology'] == a.Technology]).iloc[0]['total_construction_period'],
+                        fixed_costs_per_H= (cost_d[cost_d['Technology'] == a.Technology]).iloc[0]['fixed_maintenance_costs']*a.installed_capacity_MW/8760
+                                    + (cost_d[cost_d['Technology'] == a.Technology]).iloc[0]['Insurance']*a.installed_capacity_MW/8760      
+                                    + (cost_d[cost_d['Technology'] == a.Technology]).iloc[0]['connection_costs']*a.installed_capacity_MW/8760,
+                        variable_maintenance_per_MWh= (cost_d[cost_d['Technology'] == a.Technology]).iloc[0]['variable_maintenance'],
+                        load_factor = (cost_d[cost_d['Technology'] == a.Technology]).iloc[0]['load_factor']
         )
 
         for i,a in enumerate(data.itertuples())
@@ -126,9 +123,9 @@ def generate_buildable_plants_from_data(data: pd.DataFrame) -> list[plants.Power
 
 
 '''generate the data'''
-plant_list = generate_plants_from_data(DUKES_plants_df)
+plant_list = generate_plants_from_data(DUKES_plants_df, plant_costs_df)
 
-buildable_plants = generate_buildable_plants_from_data(DUKES_plants_df)
+buildable_plants = generate_buildable_plants_from_data(DUKES_plants_df, plant_costs_df)
 
 # print(len(plant_list))
 # print(set(df.Technology))

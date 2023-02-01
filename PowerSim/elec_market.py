@@ -21,7 +21,7 @@ class Market:
     # def sort_plant_bids(self, plants:list) -> list:
     #     return plants.sort()
 
-    def fill_demand(self, demand:float, plants_to_fill: list[plants.PowerPlant]) -> tuple[float, list]:
+    def fill_demand(self, demand:float, plants_to_fill: list[plants.PowerPlant]) -> tuple[float, list[plants.PowerPlant]]:
         '''
         returns the strike price and the list of powerplants that were selected.
         plants must be ordered.

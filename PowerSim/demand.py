@@ -28,14 +28,16 @@ class DemandAgent(mesa.Agent):
         self.hourly_demand_MW = np.array(hourly_demand_MW)
 
     def increasing_demand(self, increase = 1.01):
-
         self.hourly_demand_MW = increase*self.hourly_demand_MW
 
-    def get_daily_demand(self):
+    def vary_daily_demand(self,variance):
         '''Demand varies by day'''
-        d = np.random.normal(self.hourly_demand_MW, 500)
-        return d
+        d = np.random.normal(self.hourly_demand_MW, variance)
+        self.daily_demand = d
     
+    def get_daily_demand(self):
+        return self.daily_demand
+
     def step(self):
         self.increasing_demand()
 
