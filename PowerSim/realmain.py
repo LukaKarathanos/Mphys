@@ -1,5 +1,7 @@
 #%%
 import matplotlib.pyplot as plt
+import matplotlib as mpl
+
 from matplotlib.ticker import (MultipleLocator, AutoMinorLocator)
 import numpy as np
 
@@ -31,14 +33,19 @@ plt.rcParams['legend.handlelength'] = lhandle
 plt.rcParams['axes.autolimit_mode'] = 'round_numbers'
 plt.rcParams['axes.xmargin'] = 0
 plt.rcParams['axes.ymargin'] = 0
+plt.rcParams['figure.dpi'] = 300
+mpl.rcParams['axes.prop_cycle'] = mpl.cycler(color=["yellowgreen", "black", "dimgrey", 'darkgreen', 'aqua', 'deepskyblue', 'orange', 'blue', 'indianred']) 
 
+
+#%%
 def run():
     #initialise world
     list_of_plants = data.generate_plants_from_data(data.DUKES_plants_df, data.plant_costs_df)
     world = WorldModel(
             n_gen_cos = 3,
             power_plants=  list_of_plants,
-            n_years = 5
+            n_years = 30,
+            n_days = 12
     )
 
     world.initialise_gen_cos()
@@ -76,7 +83,7 @@ all_prices, average_yearly_prices, n_years, total_per_tech = run()
 
 
 # %% 
-
+descriptor  = 'No carbon tax second time all cost data 3 times'
 tech_types = ['nuclear', 'coal', 'fossil_fuel', 'bioenergy', 'wind_onshore', 'wind_offshore', 'solar', 'hydro', 'CCGT']
 # total_per_tech = []
 # total_per_tech24 = []
@@ -90,11 +97,39 @@ tech_types = ['nuclear', 'coal', 'fossil_fuel', 'bioenergy', 'wind_onshore', 'wi
 #%%
 '''Stacked plot of daily production'''
 
-# tech_types = set(data.DUKES_plants_df['Technology'])
+fig, ax = plt.subplots()
 
-print(len(total_per_tech[4][4]))
+total_per_tech = np.array(total_per_tech)
+print(np.shape(total_per_tech))
+
+ydata = total_per_tech[28,:,:]/1000
+xdata = range((12*24))
+
+mpl.rcParams['axes.prop_cycle'] = mpl.cycler(color=["yellowgreen", "black", "dimgrey", 'darkgreen', 'aqua', 'deepskyblue', 'orange', 'blue', 'indianred']) 
+
+# print(ydata)
+tech_types_named =  ['Nuclear', 'Coal', 'Other fossil fuel','Biomass', 'Onshore wind', 'Offshore wind', 'Solar', 'Hydro', 'Gas']
+ax.stackplot(xdata,*ydata, labels = [t for t in tech_types_named])
+#have to remove the historical data from the plot
 
 
+
+ax.set_ylabel('Electricity production (GW)')
+ax.set_xlabel('Hour')
+ax.xaxis.set_minor_locator(AutoMinorLocator())
+ax.xaxis.set_major_locator(MultipleLocator(24))
+ax.set_xlim(0, len(xdata))
+ax.yaxis.set_minor_locator(AutoMinorLocator())
+ax.legend(loc = (1.04, 0.25))
+# ax.set_xlim(0, n_years)
+# ax.set_ylim(min(average_yearly_strike_prices) - 5, (max(average_yearly_strike_prices) + 5))
+ax.spines.right.set_visible(False)
+ax.spines.top.set_visible(False)
+
+plt.savefig(fname = f'{descriptor}year production - 12 days', bbox_inches = "tight" )
+plt.show()
+
+#%%
 #%%
     
 
@@ -103,16 +138,22 @@ fig, ax = plt.subplots()
 total_per_tech = np.array(total_per_tech)
 print(np.shape(total_per_tech))
 
-ydata = total_per_tech[0,:9, :24]
+ydata = np.average(total_per_tech, axis = 2)
 print(np.shape(ydata))
+xdata = range(1, n_years+1)
+
 # print(ydata)
 tech_types_named =  ['Nuclear', 'Coal', 'Other fossil fuel','Biomass', 'Onshore wind', 'Offshore wind', 'Solar', 'Hydro', 'Gas']
-ax.stackplot(range((24)), *ydata, labels = [t for t in tech_types_named])
+for i in range(9):
+    y = ydata[:,i]/(960)
+    ax.plot(xdata,y, label =  tech_types_named[i])
 #have to remove the historical data from the plot
 
-ax.set_ylabel('Production (MW)')
-ax.set_xlabel('Hour')
+ax.set_ylabel('Average electricity production (GW)')
+ax.set_xlabel('Year')
 ax.xaxis.set_minor_locator(AutoMinorLocator())
+ax.xaxis.set_major_locator(MultipleLocator(5))
+ax.set_xlim(1, max(xdata))
 ax.yaxis.set_minor_locator(AutoMinorLocator())
 ax.legend(loc = (1.04, 0.25))
 # ax.set_xlim(0, n_years)
@@ -120,5 +161,39 @@ ax.legend(loc = (1.04, 0.25))
 ax.spines.right.set_visible(False)
 ax.spines.top.set_visible(False)
 
-plt.savefig(fname = 'first working daily production plot')
+plt.savefig(fname = f'{descriptor}average_production 30 year - 12 days', bbox_inches = "tight" )
 plt.show()
+# %%
+'''average prices and average carbon'''
+
+
+fig, ax = plt.subplots()
+
+
+
+ydata = average_yearly_prices
+
+xdata = range(1, n_years+1)
+
+# print(ydata)
+tech_types_named =  ['Nuclear', 'Coal', 'Other fossil fuel','Biomass', 'Onshore wind', 'Offshore wind', 'Solar', 'Hydro', 'Gas']
+
+ax.plot(xdata,ydata[5:])
+#have to remove the historical data from the plot
+
+ax.set_ylabel('Average electricity price (GBP)')
+ax.set_xlabel('Year')
+ax.xaxis.set_minor_locator(AutoMinorLocator())
+ax.xaxis.set_major_locator(MultipleLocator(5))
+ax.set_xlim(1, max(xdata))
+ax.yaxis.set_minor_locator(AutoMinorLocator())
+ax.legend(loc = (1.04, 0.25))
+# ax.set_xlim(0, n_years)
+# ax.set_ylim(min(average_yearly_strike_prices) - 5, (max(average_yearly_strike_prices) + 5))
+ax.spines.right.set_visible(False)
+ax.spines.top.set_visible(False)
+
+plt.savefig(fname = f'{descriptor}av. price 12 days.png', bbox_inches = "tight" )
+plt.show()
+
+

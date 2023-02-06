@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 
 
-gas_price = 50
+gas_price = 40
 '''gas price pounds per MWH. Could be highly variable'''
 biomass_price = 75
 
@@ -28,12 +28,12 @@ class Fuel():
     energy_density: float
     carbon_density: float
 
-coal = Fuel('coal', 18, 6.71, 2.27045)
-gas = Fuel('gas', 50, 12.55, 2.53925)
-biomass = Fuel('biomass', 75, 4.8, 0)
+coal = Fuel('coal', 25, 6.71, 2.27045)
+gas = Fuel('gas', 25, 12.55, 2.53925)
+biomass = Fuel('biomass', 20, 4.8, 0)
 none = Fuel('none', 0, 1, 0)
 
-carbon_tax = 18.0
+carbon_tax = 0.0
 
 
 

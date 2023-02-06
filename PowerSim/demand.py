@@ -12,11 +12,11 @@ import numpy as np
 
 #from world_model import WorldModel
 
-hourly_demand_MW = [20000, 20000, 20000, 20000,
+hourly_demand_MW = [25000, 20000, 20000, 20000,
         20000, 25000, 25000, 30000,
         30000, 40000, 40000, 40000,
         40000, 40000, 40000, 40000,
-        40000, 45000, 45000, 45000,
+        40000, 40000, 40000, 40000,
         40000, 35000, 30000, 25000]
 
 
@@ -32,7 +32,8 @@ class DemandAgent(mesa.Agent):
 
     def vary_daily_demand(self,variance):
         '''Demand varies by day'''
-        d = np.random.normal(self.hourly_demand_MW, variance)
+        #d = np.random.normal(self.hourly_demand_MW, variance)
+        d = self.hourly_demand_MW
         self.daily_demand = d
     
     def get_daily_demand(self):

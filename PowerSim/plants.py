@@ -74,7 +74,7 @@ class PowerPlant():
     def get_variable_costs(self) -> float:
         ''' Using the plant type calculate the variable costs'''
 
-        if self.technology == 'CCGT' or self.technology == 'bioenergy' or self.technology == 'coal' or 'fossil_fuel':
+        if self.technology == 'CCGT' or self.technology == 'bioenergy' or self.technology == 'coal' or self.technology == 'fossil_fuel':
             c = (self.fuel.fuel_price + self.get_carbon_tax())*1/self.fuel_effeciency + self.variable_maintenance_per_MWh
             return c
 
@@ -94,6 +94,7 @@ class PowerPlant():
     def get_carbon_tax(self):
         carbon_per_mwh = self.fuel.carbon_density/self.fuel.energy_density
         tax_per_mwh = fuels.carbon_tax*carbon_per_mwh
+        #print(tax_per_mwh)
         return tax_per_mwh
 # @dataclass(order=True)
 # class FuelPowerPlant(PowerPlant):

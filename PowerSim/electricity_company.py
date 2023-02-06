@@ -80,19 +80,21 @@ class ElecCo(mesa.Agent):
     def step(self): 
         '''
         Each step the agent will chose whether to invest in new plants, or shut them down based on profitability
-
+        runs investement 5 times 
         Checks whether there are profitable plants, then choses to build one. The plant is then appended to the build queue. 
         '''
         strike_price = self.model.average_strike_price
         self.shutdown_old(self.model.current_year)
         predicted_prices = ForecastSpotPrice.historical(self.model.average_yearly_prices)
-        plant_to_build = self.invest_better(predicted_prices, data.buildable_plants)
-        if plant_to_build is not None:
-            plant_to_build.construction_date = self.model.current_year
-            plant_to_build.company = self.name
-            self.build_queue.append(plant_to_build)
-            lcoe = plant_to_build.calculate_lcoe()
-            #print(f'Started building {plant_to_build} with lcoe {lcoe}')
+
+        for i in range(3):
+            plant_to_build = self.invest_better(predicted_prices, data.buildable_plants)
+            if plant_to_build is not None:
+                plant_to_build.construction_date = self.model.current_year
+                plant_to_build.company = self.name
+                self.build_queue.append(plant_to_build)
+                lcoe = plant_to_build.calculate_lcoe()
+                #print(f'Started building {plant_to_build} with lcoe {lcoe}')
         for plant in self.build_queue:
             if (plant.construction_date + plant.construction_length) <= self.model.current_year:
                 # plant.energy_supplied_per_hour.append([0 for i in range(self.model.n_days*24)])
