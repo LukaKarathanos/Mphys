@@ -2,10 +2,11 @@ import numpy as np
 from electricity_company import ElecCo
 import data
 import mesa
+
 import elec_market
 import plants
 from demand import DemandAgent, hourly_demand_MW
-
+import capacity_factors
 import itertools
 
 class WorldModel(mesa.Model):
@@ -67,6 +68,14 @@ class WorldModel(mesa.Model):
         elec_cos = [elec_co for elec_co in self.schedule.agents if isinstance(elec_co, ElecCo)]
         return elec_cos
 
+    def get_plants(self) -> list[plants.PowerPlant]:
+        elec_cos = self.get_elec_cos()
+        plant_list = []
+        for elec_co in elec_cos:
+            plant_list.append(elec_co.power_plants)
+        plant_list = list(np.concatenate(plant_list).flat)
+        return plant_list 
+        
     def get_demand(self) -> list:
         hourly_demand = self.demand.get_daily_demand()
         return hourly_demand
@@ -81,19 +90,21 @@ class WorldModel(mesa.Model):
 
         #For each day, sorts all powerplants by their bid, then uses the market to fill the demand
         for i in range(self.n_days):
+            
+            random_day = np.random.randint(0,capacity_factors.merra_data_days)
             day_strike_prices = []
             day_plants_selected:list[list[plants.PowerPlant]] = []
             # daily demand varies 
             self.demand.vary_daily_demand(self.demand_variance)
             self.hourly_demand = self.get_demand()
 
-            for n, demand in enumerate(self.hourly_demand):
+            for hour, demand in enumerate(self.hourly_demand):
                 ps = [elec_co.power_plants for elec_co in elec_cos]
                 ps = list(itertools.chain.from_iterable(ps))
                 for p in ps:
                     p.variable_costs_per_MWH = p.get_variable_costs()
                 ps.sort(key = lambda x: x.variable_costs_per_MWH)
-                price, plants_selected = self.market.fill_demand(demand, ps)
+                price, plants_selected = self.market.fill_demand(demand, ps, hour, random_day)
                 day_strike_prices.append(price)
                 day_plants_selected.append(plants_selected)
             self.all_strike_prices.append(day_strike_prices)

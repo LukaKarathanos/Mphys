@@ -12,9 +12,11 @@ print((df.iloc[1312]))
 
 # %%
 
-data.DUKES_plants_df[data.DUKES_plants_df['Technology'] == 'Hydro']['installed_capacity_MW'].sum()
+data.DUKES_plants_df[data.DUKES_plants_df['Technology'] == 'hydro']['installed_capacity_MW'].sum()
 
 # %%
 
 
 print(data.DUKES_plants_df['installed_capacity_MW'].sum())
+
+

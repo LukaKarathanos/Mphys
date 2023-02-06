@@ -73,7 +73,7 @@ class ElecCo(mesa.Agent):
         '''
         for plant in self.power_plants:
             if (plant.operational_length_years + plant.construction_date) < current_year:
-                self.power_plants.remove(plant)
+                plant.not_shutdown = False
                 #print(f'shutdown {plant}')
         
 
@@ -95,6 +95,7 @@ class ElecCo(mesa.Agent):
             #print(f'Started building {plant_to_build} with lcoe {lcoe}')
         for plant in self.build_queue:
             if (plant.construction_date + plant.construction_length) <= self.model.current_year:
+                # plant.energy_supplied_per_hour.append([0 for i in range(self.model.n_days*24)])
                 self.power_plants.append(plant)
                 self.build_queue.remove(plant)
                 #print(f'finished building {plant}')
