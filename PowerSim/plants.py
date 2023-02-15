@@ -21,7 +21,8 @@ class PowerPlant():
     load_factor: percentage of time they are available for 
     fuel_effeciency: what percent of fuel energy gets converted to electricity
     variable_maintenance: cost per MWh
-    shutdown
+    energy_supplied_per_hour: data of energy they supply
+    is_operating
     Should sort themselves by their variable costs -> could change this in future.
     '''
     # sort_index: float = field(init=False)
@@ -31,7 +32,8 @@ class PowerPlant():
     capacity_MW: float
 
     construction_length: int = 5
-    construction_date: int = 2022
+    construction_start_date: int = 2023
+    construction_end_date: int = 2023
     operational_length_years: float = 40
     variable_costs_per_MWH: float = 100
     fixed_costs_per_H: float = 10000
@@ -40,7 +42,7 @@ class PowerPlant():
     fuel_effeciency: float = 1.0
     variable_maintenance_per_MWh: float = 5
     energy_supplied_per_hour: list = field(default_factory=lambda:[])
-    not_shutdown = True
+    is_operating: bool = False
 
     def __post_init__(self):
         self.sort_index = self.variable_costs_per_MWH
@@ -92,24 +94,7 @@ class PowerPlant():
             return self.load_factor   
 
     def get_carbon_tax(self):
+        ''' Tax per mwh of fuel used'''
         carbon_per_mwh = self.fuel.carbon_density/self.fuel.energy_density
         tax_per_mwh = fuels.carbon_tax*carbon_per_mwh
-        #print(tax_per_mwh)
         return tax_per_mwh
-# @dataclass(order=True)
-# class FuelPowerPlant(PowerPlant):
-    
-
-
-# @dataclass(order=True)
-# class PassivePowerPlant(PowerPlant):
-
-
-# nuclear = PowerPlant('nuclear',capacity_MW = 3000, construction_date= 2022, operational_length_years = 40,
-#                     variable_costs_per_MWH= 60, fixed_costs_per_H = 50000, build_costs= 200000000)
-
-# gas = PowerPlant(name = 'gas')
-
-# print(nuclear.build_costs)                    
-
-# print(gas.calculate_lcoe())

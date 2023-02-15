@@ -41,7 +41,6 @@ class ElecCo(mesa.Agent):
         if len(viable_plants) != 0:
             return random.choice(viable_plants)
         else:
-            print('no viable plants') 
             return None
 
     def invest_primitive(self, strike_price: float, buildable_plants: list[PowerPlant]):
@@ -72,9 +71,8 @@ class ElecCo(mesa.Agent):
         shuts down plants that are too old
         '''
         for plant in self.power_plants:
-            if (plant.operational_length_years + plant.construction_date) < current_year:
-                plant.not_shutdown = False
-                #print(f'shutdown {plant}')
+            if (plant.operational_length_years + plant.construction_end_date) < current_year:
+                plant.is_operating = False
         
 
     def step(self): 
@@ -87,20 +85,24 @@ class ElecCo(mesa.Agent):
         self.shutdown_old(self.model.current_year)
         predicted_prices = ForecastSpotPrice.historical(self.model.average_yearly_prices)
 
-        for i in range(3):
+        for i in range(1):
             plant_to_build = self.invest_better(predicted_prices, data.buildable_plants)
-            if plant_to_build is not None:
-                plant_to_build.construction_date = self.model.current_year
+            if plant_to_build is not None:     
+                #adds plant to the build queue        
+                data.buildable_plants.remove(plant_to_build)
+                plant_to_build.construction_start_date = self.model.current_year
+                plant_to_build.construction_end_date = plant_to_build.construction_start_date + plant_to_build.construction_length
                 plant_to_build.company = self.name
                 self.build_queue.append(plant_to_build)
                 lcoe = plant_to_build.calculate_lcoe()
-                #print(f'Started building {plant_to_build} with lcoe {lcoe}')
         for plant in self.build_queue:
-            if (plant.construction_date + plant.construction_length) <= self.model.current_year:
-                # plant.energy_supplied_per_hour.append([0 for i in range(self.model.n_days*24)])
+            if plant.construction_end_date == self.model.current_year:
+
+                plant.is_operating = True
                 self.power_plants.append(plant)
+
                 self.build_queue.remove(plant)
-                #print(f'finished building {plant}')
+
 
         
 

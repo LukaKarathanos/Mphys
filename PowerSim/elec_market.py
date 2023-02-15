@@ -32,7 +32,7 @@ class Market:
         bids = []
         plants_selected = []
         for plant in plants_to_fill:
-            if plant.not_shutdown:
+            if plant.is_operating:
                 bid_price = plant.variable_costs_per_MWH
                 gen_amount:float = plant.get_capacity_factor(hour, day)*plant.capacity_MW
                 if filled: 

@@ -85,6 +85,10 @@ class WorldModel(mesa.Model):
         advances model by a year. First runs the electricity for the number of days wanted,
         then steps the agents (they invest etc. )
         '''
+            
+        self.demand.step()
+        self.schedule.step()
+
         elec_cos = self.get_elec_cos()
         average_daily_prices = []
 
@@ -99,8 +103,7 @@ class WorldModel(mesa.Model):
             self.hourly_demand = self.get_demand()
 
             for hour, demand in enumerate(self.hourly_demand):
-                ps = [elec_co.power_plants for elec_co in elec_cos]
-                ps = list(itertools.chain.from_iterable(ps))
+                ps = self.get_plants()
                 for p in ps:
                     p.variable_costs_per_MWH = p.get_variable_costs()
                 ps.sort(key = lambda x: x.variable_costs_per_MWH)
@@ -115,8 +118,7 @@ class WorldModel(mesa.Model):
         
         # self.datacollector.collect(self)
         
-        self.demand.step()
-        self.schedule.step()
+
         self.current_year += 1
 
 

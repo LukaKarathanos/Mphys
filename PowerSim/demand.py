@@ -12,12 +12,20 @@ import numpy as np
 
 #from world_model import WorldModel
 
-hourly_demand_MW = [25000, 20000, 20000, 20000,
-        20000, 25000, 25000, 30000,
-        30000, 40000, 40000, 40000,
-        40000, 40000, 40000, 40000,
-        40000, 40000, 40000, 40000,
-        40000, 35000, 30000, 25000]
+# hourly_demand_MW = [25000, 20000, 20000, 20000,
+#         20000, 25000, 25000, 30000,
+#         30000, 40000, 40000, 40000,
+#         40000, 40000, 40000, 40000,
+#         40000, 40000, 40000, 40000,
+#         40000, 35000, 30000, 25000]
+
+hourly_demand_MW = [20000, 20000, 20000, 20000,
+        20000, 20000, 20000, 20000,
+        20000, 20000, 20000, 20000,
+        20000, 20000, 20000, 20000,
+        20000, 20000, 20000, 20000,
+        20000, 20000, 20000, 20000]
+
 
 
 # hourly_demand_MW = [15000, 30000, 20000]
@@ -27,7 +35,7 @@ class DemandAgent(mesa.Agent):
         super().__init__(unique_id, model)
         self.hourly_demand_MW = np.array(hourly_demand_MW)
 
-    def increasing_demand(self, increase = 1.01):
+    def increasing_demand(self, increase = 1):
         self.hourly_demand_MW = increase*self.hourly_demand_MW
 
     def vary_daily_demand(self,variance):
