@@ -1,13 +1,13 @@
 import numpy as np
-from electricity_company import ElecCo
-import data
 import mesa
+import itertools
 
+import data
+from electricity_company import ElecCo
 import elec_market
 import plants
 from demand import DemandAgent, hourly_demand_MW
 import capacity_factors
-import itertools
 
 class WorldModel(mesa.Model):
     '''
