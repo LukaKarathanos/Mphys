@@ -7,31 +7,34 @@ Currently, list of average demands in MW
 
 In future will simulate vehicle to grid to level out the demand.
 '''
+from typing import List
+
 import mesa
 import numpy as np
 
 #from world_model import WorldModel
 
-# hourly_demand_MW = [25000, 20000, 20000, 20000,
-#         20000, 25000, 25000, 30000,
-#         30000, 40000, 40000, 40000,
-#         40000, 40000, 40000, 40000,
-#         40000, 40000, 40000, 40000,
-#         40000, 35000, 30000, 25000]
+hourly_demand_MW = [25000, 20000, 20000, 20000,
+        20000, 25000, 25000, 30000,
+        30000, 40000, 40000, 40000,
+        40000, 40000, 40000, 40000,
+        40000, 40000, 40000, 40000,
+        40000, 35000, 30000, 25000]
 
-hourly_demand_MW = [20000, 20000, 20000, 20000,
-        20000, 20000, 20000, 20000,
-        20000, 20000, 20000, 20000,
-        20000, 20000, 20000, 20000,
-        20000, 20000, 20000, 20000,
-        20000, 20000, 20000, 20000]
+
+# hourly_demand_MW = [20000, 20000, 20000, 20000,
+#         20000, 20000, 20000, 20000,
+#         20000, 20000, 20000, 20000,
+#         20000, 20000, 20000, 20000,
+#         20000, 20000, 20000, 20000,
+#         20000, 20000, 20000, 20000]
 
 
 
 # hourly_demand_MW = [15000, 30000, 20000]
 
 class DemandAgent(mesa.Agent):
-    def __init__(self, unique_id, model: 'WorldModel', hourly_demand_MW: list[float]):
+    def __init__(self, unique_id, model: 'WorldModel', hourly_demand_MW: List[float]):
         super().__init__(unique_id, model)
         self.hourly_demand_MW = np.array(hourly_demand_MW)
 

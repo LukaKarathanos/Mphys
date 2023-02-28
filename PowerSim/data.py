@@ -10,13 +10,14 @@ import plants
 
 historical_price_data = [70.0, 70.0, 70.0, 70.0, 70.0]
 
-DUKES_plants_df = pd.read_csv(r'C:\Users\LukaK\OneDrive - Durham University\Projects\Agent based modelling easy\PowerSim\DUKES_5.11.csv')
+DUKES_plants_df = pd.read_csv(r'PowerSim/DUKES_5.11.csv')
 DUKES_plants_df.dropna(axis=0,how='all',inplace=True)
 
-plant_costs_df = pd.read_csv(r'C:\Users\LukaK\OneDrive - Durham University\Projects\Agent based modelling easy\PowerSim\plant_cost_data.csv')             
+plant_costs_df = pd.read_csv(r'PowerSim/plant_cost_data.csv')             
 plant_costs_df.dropna(axis=0, how='all', inplace=True)
 
-def generate_plants_from_data(current_plant_database: pd.DataFrame, cost_d: pd.DataFrame) -> list[plants.PowerPlant]:
+
+def generate_plants_from_data(current_plant_database: pd.DataFrame, cost_d: pd.DataFrame):
     ''' Generate plants from database.'''
     A = [
         plants.PowerPlant(
@@ -44,7 +45,7 @@ def generate_plants_from_data(current_plant_database: pd.DataFrame, cost_d: pd.D
     ]
     return A
 
-def generate_buildable_plants_from_data(buildable_plant_database: pd.DataFrame, cost_d: pd.DataFrame) -> list[plants.PowerPlant]:
+def generate_buildable_plants_from_data(buildable_plant_database: pd.DataFrame, cost_d: pd.DataFrame):
     ''' Generate plants from database.'''
     A = [
         plants.PowerPlant(
@@ -72,12 +73,6 @@ def generate_buildable_plants_from_data(buildable_plant_database: pd.DataFrame, 
 
 
 
-
-
-'''generate the data'''
-plant_list = generate_plants_from_data(DUKES_plants_df, plant_costs_df)
-
-buildable_plants = generate_buildable_plants_from_data(DUKES_plants_df, plant_costs_df)
 
 
 

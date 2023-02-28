@@ -44,6 +44,7 @@ mpl.rcParams['axes.prop_cycle'] = mpl.cycler(color=["yellowgreen", "black", "dim
 
 print(np.load('total_per_tech.npy'))
 
+
 # %% 
 descriptor  = 'No carbon tax second time all cost data 3 times'
 tech_types = ['nuclear', 'coal', 'fossil_fuel', 'bioenergy', 'wind_onshore', 'wind_offshore', 'solar', 'hydro', 'CCGT']

@@ -1,6 +1,7 @@
+from typing import List
 import numpy as np
 import mesa
-import itertools
+
 
 import data
 from electricity_company import ElecCo
@@ -20,13 +21,13 @@ class WorldModel(mesa.Model):
     '''
     def __init__(
         self, 
-        n_gen_cos: int,
-        power_plants: list[plants.PowerPlant],
+        power_plants: List[plants.PowerPlant],
+        buildable_plants: List[plants.PowerPlant],
         init_year: int = 2022,
         n_years: int = 30,
         n_days: int = 4,
-        initial_hourly_demand: list = hourly_demand_MW,    
-        historical_strike_prices: list[float] = data.historical_price_data,
+        initial_hourly_demand: List = hourly_demand_MW,    
+        historical_strike_prices: List[float] = data.historical_price_data,
         demand_variance: float = 500.0,
         data_folder = 'Data_out'
         ):
@@ -35,15 +36,15 @@ class WorldModel(mesa.Model):
         self.n_years = n_years
         self.n_days = n_days
         self.initial_hourly_demand = initial_hourly_demand
-        self.n_gen_cos = n_gen_cos
         self.power_plants = power_plants
+        self.buildable_plants = buildable_plants
         self.historical_strike_prices = historical_strike_prices
         self.demand_variance = demand_variance
         
         self.years_since_start = 0
         self.average_yearly_prices = historical_strike_prices
         self.all_strike_prices = []
-        self.all_plants_selected:list[list[list[plants.PowerPlant]]] = []
+        self.all_plants_selected:List[List[List[plants.PowerPlant]]] = []
         self.average_strike_price = 40.0
         # mesa scheduler. Activates each agent once per step, in random order. In future, do simultaneous activation
         self.schedule = mesa.time.RandomActivation(self)
@@ -54,7 +55,7 @@ class WorldModel(mesa.Model):
         self.market = elec_market.Market()
         # create data logger
         self.data_folder = data_folder
-        self.create_data_collector()
+        # self.create_data_collector()
 
     def initialise_gen_cos(self):
         '''
@@ -64,11 +65,11 @@ class WorldModel(mesa.Model):
             co = ElecCo(i, self, company_name, [plant for plant in self.power_plants if plant.company is company_name], cash = 5_000_000_000)
             self.schedule.add(co)
 
-    def get_elec_cos(self) -> list[ElecCo]:
+    def get_elec_cos(self) -> List[ElecCo]:
         elec_cos = [elec_co for elec_co in self.schedule.agents if isinstance(elec_co, ElecCo)]
         return elec_cos
 
-    def get_plants(self) -> list[plants.PowerPlant]:
+    def get_plants(self) -> List[plants.PowerPlant]:
         elec_cos = self.get_elec_cos()
         plant_list = []
         for elec_co in elec_cos:
@@ -76,7 +77,11 @@ class WorldModel(mesa.Model):
         plant_list = list(np.concatenate(plant_list).flat)
         return plant_list 
         
-    def get_demand(self) -> list:
+    def get_buildable_plants(self) -> List[plants.PowerPlant]:
+        ''' Change in future to change based on year.'''
+        return self.buildable_plants
+        
+    def get_demand(self) -> List:
         hourly_demand = self.demand.get_daily_demand()
         return hourly_demand
 
@@ -97,7 +102,7 @@ class WorldModel(mesa.Model):
             
             random_day = np.random.randint(0,capacity_factors.merra_data_days)
             day_strike_prices = []
-            day_plants_selected:list[list[plants.PowerPlant]] = []
+            day_plants_selected:List[List[plants.PowerPlant]] = []
             # daily demand varies 
             self.demand.vary_daily_demand(self.demand_variance)
             self.hourly_demand = self.get_demand()
@@ -122,18 +127,18 @@ class WorldModel(mesa.Model):
         self.current_year += 1
 
 
-    def create_data_collector(self):
-        ''' get this working'''
-        self.datacollector = mesa.DataCollector(
-            model_reporters={
-                'daily_demand': lambda m: self.get_demand()
+    # def create_data_collector(self):
+    #     ''' get this working'''
+    #     self.datacollector = mesa.DataCollector(
+    #         model_reporters={
+    #             'daily_demand': lambda m: self.get_demand()
                 
-            }
+    #         }
 
 
 
 
-        )
+    #     )
         
 
     # @staticmethod

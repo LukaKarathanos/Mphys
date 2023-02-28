@@ -4,8 +4,8 @@ Need a way to predict the cost for the day ahead. Demand agent can use this to l
 (vehicle to grid, demand side flexible tariffs)
 Also need long term prediction, which elecco agents can use to decide whether to invest.  
 '''
-
-import plants
+from typing import List, Tuple
+import plants 
 
 
 
@@ -21,7 +21,7 @@ class Market:
     # def sort_plant_bids(self, plants:list) -> list:
     #     return plants.sort()
 
-    def fill_demand(self, demand:float, plants_to_fill: list[plants.PowerPlant], hour: int, day: int) -> tuple[float, list[plants.PowerPlant]]:
+    def fill_demand(self, demand:float, plants_to_fill: List[plants.PowerPlant], hour: int, day: int) -> Tuple[float, List[plants.PowerPlant]]:
         '''
         returns the strike price and the list of powerplants that were selected.
         plants must be ordered. sets the amount the plants have supplied. 

@@ -1,3 +1,4 @@
+from typing import List
 import numpy as np
 import random
 import mesa
@@ -16,7 +17,7 @@ class ElecCo(mesa.Agent):
     to invest in -> not implemented. 
     Currently just choses whether to invest or not.  
     '''
-    def __init__(self, unique_id, model, name: str, power_plants:list[PowerPlant], cash: float = 0):
+    def __init__(self, unique_id, model, name: str, power_plants:List[PowerPlant], cash: float = 0):
         '''
         electricity company definition
         name: unique name 
@@ -28,12 +29,12 @@ class ElecCo(mesa.Agent):
         self.name = name
         self.power_plants = power_plants
         self.cash = cash
-        self.build_queue:list[PowerPlant] = []
+        self.build_queue:List[PowerPlant] = []
         self.model = model
 
-    def invest_better(self, predicted_prices: np.ndarray, buildable_plants: list[PowerPlant]):
+    def invest_better(self, predicted_prices: np.ndarray, buildable_plants: List[PowerPlant]):
         ''' Uses a predicted electricity price per year to invest. '''
-        viable_plants: list[PowerPlant] = []
+        viable_plants: List[PowerPlant] = []
         for plant in buildable_plants:
             npv = ProfitCalculator.calculate_npv(plant, predicted_prices)
             if npv > 0:
@@ -43,13 +44,13 @@ class ElecCo(mesa.Agent):
         else:
             return None
 
-    def invest_primitive(self, strike_price: float, buildable_plants: list[PowerPlant]):
+    def invest_primitive(self, strike_price: float, buildable_plants: List[PowerPlant]):
         '''
         If plant lcoe is lower than strike price, build it.
         In future, more checks whether it would be profitable and choose the best one to build.
                 
         '''
-        viable_plants: list[PowerPlant] = []
+        viable_plants: List[PowerPlant] = []
         for plant in buildable_plants:
             if strike_price > plant.calculate_lcoe():
                 viable_plants.append(plant)
@@ -84,12 +85,12 @@ class ElecCo(mesa.Agent):
         strike_price = self.model.average_strike_price
         self.shutdown_old(self.model.current_year)
         predicted_prices = ForecastSpotPrice.historical(self.model.average_yearly_prices)
-
-        for i in range(1):
-            plant_to_build = self.invest_better(predicted_prices, data.buildable_plants)
+        buildable_plants = self.model.buildable_plants
+        for i in range(3):
+            plant_to_build = self.invest_better(predicted_prices, buildable_plants)
             if plant_to_build is not None:     
                 #adds plant to the build queue        
-                data.buildable_plants.remove(plant_to_build)
+                buildable_plants.remove(plant_to_build)
                 plant_to_build.construction_start_date = self.model.current_year
                 plant_to_build.construction_end_date = plant_to_build.construction_start_date + plant_to_build.construction_length
                 plant_to_build.company = self.name

@@ -2,14 +2,6 @@ from dataclasses import dataclass
 
 
 
-gas_price = 40
-'''gas price pounds per MWH. Could be highly variable'''
-biomass_price = 75
-
-coal_price = 18
-
-'''price per ton/energy density. ~24MJ/kg -> 6.7MWH/ton. ~£120/ton'''
-
 '''Do soon'''
 
 @dataclass
@@ -33,7 +25,7 @@ gas = Fuel('gas', 25, 12.55, 2.53925)
 biomass = Fuel('biomass', 20, 4.8, 0)
 none = Fuel('none', 0, 1, 0)
 
-carbon_tax = 0.0
+carbon_tax = 50
 
 
 
