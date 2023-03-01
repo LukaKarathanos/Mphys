@@ -76,8 +76,8 @@ def run(
     all_strike_prices = np.array(world.all_strike_prices)
     #print(np.shape(total_per_tech))
 
-    np.save(f'data/total_per_tech_{job_id}.npy', total_per_tech)
-    np.save(f'data/all_strike_prices_{job_id}.npy', all_strike_prices)
+    np.save(f'data/36days/tech/total_per_tech_{job_id}.npy', total_per_tech)
+    np.save(f'data/36days/price/all_strike_prices_{job_id}.npy', all_strike_prices)
 
     return total_per_tech  #world.all_strike_prices, world.average_yearly_prices, 
 
@@ -88,7 +88,7 @@ run once
 
 if __name__ == '__main__':
     n_years = 30
-    n_days = 4
+    n_days = 36
     run(data.DUKES_plants_df,
         data.plant_costs_df,
         n_years,
