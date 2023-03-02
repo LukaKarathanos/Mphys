@@ -9,6 +9,7 @@ import elec_market
 import plants
 from demand import DemandAgent, hourly_demand_MW
 import capacity_factors
+import fuels
 
 class WorldModel(mesa.Model):
     '''
@@ -92,6 +93,10 @@ class WorldModel(mesa.Model):
         '''
             
         self.demand.step()
+        
+        for f in fuels.fuel_list:
+            f.set_fuel_price()
+
         self.schedule.step()
 
         elec_cos = self.get_elec_cos()

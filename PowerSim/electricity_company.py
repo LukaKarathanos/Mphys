@@ -1,9 +1,8 @@
+import copy
 from typing import List
 import numpy as np
 import random
 import mesa
-import data
-
 
 
 #import world_model
@@ -86,11 +85,11 @@ class ElecCo(mesa.Agent):
         self.shutdown_old(self.model.current_year)
         predicted_prices = ForecastSpotPrice.historical(self.model.average_yearly_prices)
         buildable_plants = self.model.buildable_plants
-        for i in range(3):
+        for _ in range(3):
             plant_to_build = self.invest_better(predicted_prices, buildable_plants)
             if plant_to_build is not None:     
                 #adds plant to the build queue        
-                buildable_plants.remove(plant_to_build)
+                plant_to_build = copy.copy(plant_to_build)
                 plant_to_build.construction_start_date = self.model.current_year
                 plant_to_build.construction_end_date = plant_to_build.construction_start_date + plant_to_build.construction_length
                 plant_to_build.company = self.name

@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import random
 
 
 
@@ -18,12 +19,26 @@ class Fuel():
     fuel_type: str
     fuel_price: float
     energy_density: float
-    carbon_density: float
+    carbon_density: float   
+    price_increase_per_year: float = 1
+    price_stdev: float = 0
+    mean_fuel_price: float = None
 
-coal = Fuel('coal', 25, 6.71, 2.27045)
-gas = Fuel('gas', 25, 12.55, 2.53925)
+    def __post_init__(self):
+        self.mean_fuel_price = self.fuel_price
+
+    def set_fuel_price(self) -> None:
+        ''' get fuel price for the year. Runs every step'''
+        self.mean_fuel_price = self.price_increase_per_year*self.mean_fuel_price
+        fp = random.normalvariate(self.mean_fuel_price, self.price_stdev)
+        self.fuel_price = fp        
+
+coal = Fuel(fuel_type = 'coal', fuel_price= 25, energy_density=6.71, carbon_density =2.27045, price_increase_per_year = 1.01, price_stdev=2)
+gas = Fuel(fuel_type = 'gas', fuel_price= 25, energy_density=12.55, carbon_density = 2.53925,price_increase_per_year = 1.01, price_stdev=5)
 biomass = Fuel('biomass', 20, 4.8, 0)
 none = Fuel('none', 0, 1, 0)
+
+fuel_list = [coal, gas, biomass, none]
 
 carbon_tax = 50
 
