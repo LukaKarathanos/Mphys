@@ -93,9 +93,10 @@ class WorldModel(mesa.Model):
         '''
             
         self.demand.step()
-        
+
         for f in fuels.fuel_list:
             f.set_fuel_price()
+        fuels.carbon_tax.set_carbon_tax()
 
         self.schedule.step()
 

@@ -96,5 +96,5 @@ class PowerPlant():
     def get_carbon_tax(self):
         ''' Tax per mwh of fuel used'''
         carbon_per_mwh = self.fuel.carbon_density/self.fuel.energy_density
-        tax_per_mwh = fuels.carbon_tax*carbon_per_mwh
+        tax_per_mwh = fuels.carbon_tax.carbon_tax*carbon_per_mwh
         return tax_per_mwh
