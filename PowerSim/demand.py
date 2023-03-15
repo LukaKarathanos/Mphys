@@ -11,15 +11,10 @@ from typing import List
 
 import mesa
 import numpy as np
+import pandas as pd
 
 #from world_model import WorldModel
 
-hourly_demand_MW = [25000, 20000, 20000, 20000,
-        20000, 25000, 25000, 30000,
-        30000, 40000, 40000, 40000,
-        40000, 40000, 40000, 40000,
-        40000, 40000, 40000, 40000,
-        40000, 35000, 30000, 25000]
 
 
 # hourly_demand_MW = [20000, 20000, 20000, 20000,
@@ -34,9 +29,26 @@ hourly_demand_MW = [25000, 20000, 20000, 20000,
 # hourly_demand_MW = [15000, 30000, 20000]
 
 class DemandAgent(mesa.Agent):
-    def __init__(self, unique_id, model: 'WorldModel', hourly_demand_MW: List[float]):
+    def __init__(self, unique_id, model: 'WorldModel'):
         super().__init__(unique_id, model)
-        self.hourly_demand_MW = np.array(hourly_demand_MW)
+        
+        df = pd.read_csv(r'PowerSim/archive/noNaN_2022_demand.csv')
+        # Create a new column 'group' that groups every two rows
+        df['group'] = (df.index // 2)
+        #national demand plus embedded wind and solar
+        df['true_demand'] = df['nd'] + df['embedded_wind_generation'] + df['embedded_solar_generation']
+        # Use groupby to group the DataFrame by 'group', then compute the mean
+        df24 = df.groupby('group').mean()
+        df24['settlement_period'] = (df24['settlement_period'] + 0.5)/2
+        grouped_df = df24.groupby('settlement_period').agg(['mean', 'median', 'std'])
+
+        self.demand_df = grouped_df
+
+        self.hourly_demand_MW = self.demand_df['nd']['mean'].values
+
+        #print(grouped_df)
+
+        
 
     def increasing_demand(self, increase = 1):
         self.hourly_demand_MW = increase*self.hourly_demand_MW
@@ -47,9 +59,6 @@ class DemandAgent(mesa.Agent):
         d = self.hourly_demand_MW
         self.daily_demand = d
     
-    def get_daily_demand(self):
-        return self.daily_demand
-
     def step(self):
         self.increasing_demand()
 

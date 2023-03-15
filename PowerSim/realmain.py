@@ -13,12 +13,10 @@ import data
 
 current_time = int(time.time())
 process_id = os.getpid()
-
 if len(sys.argv) > 1:
     job_id = sys.argv[1]
 else:
     job_id = process_id
-
 
 
 seed = current_time * job_id
@@ -37,11 +35,11 @@ def run(
         
     list_of_plants = data.generate_plants_from_data(plant_data, plant_cost_data)
 
-    buildable_plants = data.generate_buildable_plants_from_data(plant_data, plant_cost_data)
 
     world = WorldModel(
             power_plants =  list_of_plants,
-            buildable_plants = buildable_plants,
+            buildable_plant_data = plant_data,
+            plant_cost_data = plant_cost_data,
             n_years = n_years,
             n_days = n_days
     )
@@ -64,6 +62,7 @@ def run(
         # print(world.get_demand())
         #print(f'year {i} complete')
 
+
     #The plot -> configured properly
     
     # obj_list = world.get_elec_cos()
@@ -74,10 +73,14 @@ def run(
 
     total_per_tech = np.array(total_per_tech)
     all_strike_prices = np.array(world.all_strike_prices)
+
+    monies = np.array([genco.cash for genco in world.get_elec_cos()])
     #print(np.shape(total_per_tech))
 
-    np.save(f'data/changing_fuel_price/tech/total_per_tech_{job_id}.npy', total_per_tech)
-    np.save(f'data/changing_fuel_price/price/all_strike_prices_{job_id}.npy', all_strike_prices)
+    np.save(f'data/{scenario_name}/tech/total_per_tech_{job_id}.npy', total_per_tech)
+    np.save(f'data/{scenario_name}/price/all_strike_prices_{job_id}.npy', all_strike_prices)
+    np.save(f'data/{scenario_name}/monies/all_strike_prices_{job_id}.npy', monies)
+
 
     return total_per_tech  #world.all_strike_prices, world.average_yearly_prices, 
 
@@ -88,7 +91,9 @@ run once
 
 if __name__ == '__main__':
     n_years = 30
-    n_days = 36
+    n_days = 24
+    scenario_name = '5almostworking'
+
     run(data.DUKES_plants_df,
         data.plant_costs_df,
         n_years,

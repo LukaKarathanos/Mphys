@@ -11,7 +11,7 @@ class Fuel():
     Defines fuel types. Data for natural gas not LNG
 
     :fuel_type -  type of fuel used
-    :fuel_price -  per MW
+    :fuel_price -  per MWh
     :energy_density - MWh per tonne. net calorific value    
     :carbon_density - tonnes co2 eqv per tonne
     '''
@@ -34,7 +34,7 @@ class Fuel():
         self.fuel_price = fp        
 
 coal = Fuel(fuel_type = 'coal', fuel_price= 25, energy_density=6.71, carbon_density =2.27045, price_increase_per_year = 1.01, price_stdev=2)
-gas = Fuel(fuel_type = 'gas', fuel_price= 25, energy_density=12.55, carbon_density = 2.53925,price_increase_per_year = 1.01, price_stdev=5)
+gas = Fuel(fuel_type = 'gas', fuel_price= 25, energy_density=12.55, carbon_density = 2.53925,price_increase_per_year = 1.01, price_stdev=2)
 biomass = Fuel('biomass', 20, 4.8, 0)
 none = Fuel('none', 0, 1, 0)
 

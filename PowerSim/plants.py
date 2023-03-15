@@ -43,6 +43,9 @@ class PowerPlant():
     variable_maintenance_per_MWh: float = 5
     energy_supplied_per_hour: list = field(default_factory=lambda:[])
     is_operating: bool = False
+    interest_rate = 0.075
+    yearly_debt_payment = 0
+    npv = None
 
     def __post_init__(self):
         self.sort_index = self.variable_costs_per_MWH

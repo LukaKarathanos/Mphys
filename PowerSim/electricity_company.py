@@ -3,7 +3,7 @@ from typing import List
 import numpy as np
 import random
 import mesa
-
+import numpy_financial as npf
 
 #import world_model
 from predictor import ForecastSpotPrice
@@ -31,15 +31,19 @@ class ElecCo(mesa.Agent):
         self.build_queue:List[PowerPlant] = []
         self.model = model
 
-    def invest_better(self, predicted_prices: np.ndarray, buildable_plants: List[PowerPlant]):
-        ''' Uses a predicted electricity price per year to invest. '''
+    def invest_better(self, predicted_prices: np.ndarray, buildable_plants: List[PowerPlant], downpayment_percent: float):
+        ''' Uses a predicted electricity price per year to invest. Checks if company has enough money for the downpayment.
+        picks highest npv per pound.
+        '''
         viable_plants: List[PowerPlant] = []
         for plant in buildable_plants:
-            npv = ProfitCalculator.calculate_npv(plant, predicted_prices)
-            if npv > 0:
-                viable_plants.append(plant)
+            if downpayment_percent*plant.build_costs < self.cash:
+                plant.npv = ProfitCalculator.calculate_npv(plant, predicted_prices)
+                if plant.npv > 0:
+                    viable_plants.append(plant)
         if len(viable_plants) != 0:
-            return random.choice(viable_plants)
+            best_plant = max(viable_plants, key = lambda obj: obj.npv/obj.build_costs)
+            return best_plant
         else:
             return None
 
@@ -74,6 +78,43 @@ class ElecCo(mesa.Agent):
             if (plant.operational_length_years + plant.construction_end_date) < current_year:
                 plant.is_operating = False
         
+    def init_cash(self):
+        ''' 
+        sets the initial cash each agent has, based on their current assets
+        '''
+        c = 0
+        for plant in self.power_plants:
+            y_to_operate: float = plant.operational_length_years + plant.construction_end_date - self.model.current_year
+            plant_val = (y_to_operate/plant.operational_length_years)*plant.build_costs
+            c += plant_val
+        self.cash = c
+    
+    def get_paid(self, days_prices: list):
+        '''Pay itself the net profit/loss from all the plants in the day. Assuming costs don't change during the day'''
+        total_production = np.zeros(24)
+        costs = 0
+        for plant in self.power_plants: 
+            if plant.is_operating: 
+                production = np.array(plant.energy_supplied_per_hour[-24])
+                total_production += production
+                costs += np.sum(total_production*plant.variable_costs_per_MWH) + plant.fixed_costs_per_H*24       
+        price = np.array(days_prices)
+        revenue = np.sum(price*total_production)
+        print(revenue)
+        cashflow = (revenue - costs)*365/self.model.n_days + self.get_debt_payment()
+        print(cashflow)
+        
+        self.cash += cashflow
+
+    def get_debt_payment(self) -> float:
+        ''' Gets the yearly debt payments'''
+        debt = 0
+        for plant in self.power_plants:
+            if plant.is_operating:
+                debt += plant.yearly_debt_payment
+        for plant in self.build_queue:
+            debt += plant.yearly_debt_payment
+        return debt
 
     def step(self): 
         '''
@@ -85,16 +126,20 @@ class ElecCo(mesa.Agent):
         self.shutdown_old(self.model.current_year)
         predicted_prices = ForecastSpotPrice.historical(self.model.average_yearly_prices)
         buildable_plants = self.model.buildable_plants
-        for _ in range(3):
-            plant_to_build = self.invest_better(predicted_prices, buildable_plants)
+        for _ in range(10):
+            plant_to_build = self.invest_better(predicted_prices, buildable_plants, self.model.downpayment_percent)
             if plant_to_build is not None:     
                 #adds plant to the build queue        
-                plant_to_build = copy.copy(plant_to_build)
                 plant_to_build.construction_start_date = self.model.current_year
                 plant_to_build.construction_end_date = plant_to_build.construction_start_date + plant_to_build.construction_length
                 plant_to_build.company = self.name
+                plant_to_build.yearly_debt_payment = ProfitCalculator.calculate_yearly_debt(plant_to_build, self.model.downpayment_percent, plant_to_build.interest_rate)
                 self.build_queue.append(plant_to_build)
+                buildable_plants.remove(plant_to_build)
+                self.cash -= plant_to_build.build_costs*self.model.downpayment_percent
                 lcoe = plant_to_build.calculate_lcoe()
+            else:
+                break
         for plant in self.build_queue:
             if plant.construction_end_date == self.model.current_year:
 

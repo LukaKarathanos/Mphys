@@ -23,4 +23,10 @@ class ProfitCalculator:
     def calculate_running_npv(plant: PowerPlant, discount_rate):
         '''Calculate npv'''
 
+    @staticmethod
+    def calculate_yearly_debt(plant: PowerPlant, downpayment_percent, interest_rate):
+        total_debt = (1-downpayment_percent)*plant.build_costs
+        rate = npf.pmt(interest_rate, (plant.operational_length_years+plant.construction_length),total_debt)
+        return rate
+    
 

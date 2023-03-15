@@ -7,7 +7,7 @@ import data
 from electricity_company import ElecCo
 import elec_market
 import plants
-from demand import DemandAgent, hourly_demand_MW
+from demand import DemandAgent
 import capacity_factors
 import fuels
 
@@ -23,24 +23,27 @@ class WorldModel(mesa.Model):
     def __init__(
         self, 
         power_plants: List[plants.PowerPlant],
-        buildable_plants: List[plants.PowerPlant],
+        buildable_plant_data,
+        plant_cost_data,
         init_year: int = 2022,
         n_years: int = 30,
         n_days: int = 4,
-        initial_hourly_demand: List = hourly_demand_MW,    
         historical_strike_prices: List[float] = data.historical_price_data,
         demand_variance: float = 500.0,
-        data_folder = 'Data_out'
+        data_folder = 'Data_out',
+        downpayment_percent = 0.1
         ):
 
+        self.buildable_plant_data = buildable_plant_data
+        self.plant_cost_data = plant_cost_data
         self.current_year = init_year
         self.n_years = n_years
         self.n_days = n_days
-        self.initial_hourly_demand = initial_hourly_demand
         self.power_plants = power_plants
-        self.buildable_plants = buildable_plants
+        self.buildable_plants = []
         self.historical_strike_prices = historical_strike_prices
         self.demand_variance = demand_variance
+        self.downpayment_percent = downpayment_percent
         
         self.years_since_start = 0
         self.average_yearly_prices = historical_strike_prices
@@ -50,7 +53,7 @@ class WorldModel(mesa.Model):
         # mesa scheduler. Activates each agent once per step, in random order. In future, do simultaneous activation
         self.schedule = mesa.time.RandomActivation(self)
         # initialise demand agent
-        self.demand = DemandAgent(1, self, initial_hourly_demand)
+        self.demand = DemandAgent(1, self)
         self.hourly_demand = self.demand.hourly_demand_MW
         # initialise market
         self.market = elec_market.Market()
@@ -63,7 +66,8 @@ class WorldModel(mesa.Model):
         Using data from Data, initialise different gen_cos using the plants assossiciated with them. Linked to the dataframe which is bad
         '''
         for i, company_name in enumerate(set(data.DUKES_plants_df.company_name)):
-            co = ElecCo(i, self, company_name, [plant for plant in self.power_plants if plant.company is company_name], cash = 5_000_000_000)
+            co = ElecCo(i, self, company_name, [plant for plant in self.power_plants if plant.company is company_name])
+            co.init_cash()
             self.schedule.add(co)
 
     def get_elec_cos(self) -> List[ElecCo]:
@@ -80,10 +84,11 @@ class WorldModel(mesa.Model):
         
     def get_buildable_plants(self) -> List[plants.PowerPlant]:
         ''' Change in future to change based on year.'''
-        return self.buildable_plants
+        buildable_plants = data.generate_buildable_plants_from_data(self.buildable_plant_data, self.plant_cost_data)
+        return buildable_plants
         
     def get_demand(self) -> List:
-        hourly_demand = self.demand.get_daily_demand()
+        hourly_demand = self.demand.hourly_demand_MW
         return hourly_demand
 
     def world_step(self):
@@ -93,11 +98,11 @@ class WorldModel(mesa.Model):
         '''
             
         self.demand.step()
-
+    
         for f in fuels.fuel_list:
             f.set_fuel_price()
         fuels.carbon_tax.set_carbon_tax()
-
+        self.buildable_plants = self.get_buildable_plants()
         self.schedule.step()
 
         elec_cos = self.get_elec_cos()
@@ -112,7 +117,7 @@ class WorldModel(mesa.Model):
             # daily demand varies 
             self.demand.vary_daily_demand(self.demand_variance)
             self.hourly_demand = self.get_demand()
-
+            
             for hour, demand in enumerate(self.hourly_demand):
                 ps = self.get_plants()
                 for p in ps:
@@ -125,6 +130,9 @@ class WorldModel(mesa.Model):
             self.all_plants_selected.append(day_plants_selected)
             self.average_strike_price = sum(day_strike_prices)/len(day_strike_prices)
             average_daily_prices.append(self.average_strike_price)
+
+            for elec_co in elec_cos:
+                elec_co.get_paid(day_strike_prices)
         self.average_yearly_prices.append(sum(average_daily_prices)/len(average_daily_prices))
         
         # self.datacollector.collect(self)

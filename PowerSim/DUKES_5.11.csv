@@ -148,7 +148,6 @@ Anesco,Watchfield,solar,PV,No,Solar,,10.6998,LV,England,South West,TA94LD,,33413
 Anesco,Welbeck ,solar,PV,No,Solar,,11.2608,LV,England,East Midlands,NG209PU,,457669,369999,2014
 Anesco,Bumpers Farm 2,solar,PV,No,Solar,,12.0077,LV,England,South East,HP279RE,,,,2020
 Anesco,Eynsham,solar,PV,No,Solar,,13.452,LV,England,South East,OX296XD,,439658,210754,2014
-Anesco,Laurel Hill,solar,PV,No,Solar,,14.202,LV,England,Northern Ireland,BT251JS,,,,2018
 Anesco,Anglesey ,solar,PV,No,Solar,,14.92608,LV,Wales,Wales,LL635SZ,,238717,367342,2014
 Anesco,Hadlow,solar,PV,No,Solar,,18.92176,LV,England,South East,CB89YD,,562879,145736,2015
 Anesco,Troughton,solar,PV,No,Solar,,30.86604,LV,England,South West,GL207BW,,,,2016
@@ -188,8 +187,6 @@ Capital Dynamics UK,Red Gap,wind_onshore,Onshore,No,Wind,,12.5,LV,Scotland,,,,,,
 Capital Dynamics UK,Seegronan,wind_onshore,Onshore,No,Wind,,13.8,LV,Scotland,,,,,,2016
 Capital Dynamics UK,Crockandun,wind_onshore,Onshore,No,Wind,,15,LV,Scotland,,,,,,2017
 Capital Dynamics UK,Shantavny,wind_onshore,Onshore,No,Wind,,16.1,LV,Scotland,,,,,,2017
-Capital Dynamics UK,Dunmore,wind_onshore,Onshore,No,Wind,,21,LV,Northern Ireland,Northern Ireland,,,,,2014
-Capital Dynamics UK,Elginny,wind_onshore,Onshore,No,Wind,,23,LV,Northern Ireland,Northern Ireland,,,,,2018
 Capital Dynamics UK,Whiteside Hill,wind_onshore,Onshore,No,Wind,,28.5,HV,Scotland,,,,,,2018
 Centrica,Glanford Brigg,fossil_fuel,Single Cycle,No,Natural Gas,,99,HV,England,Yorkshire and Humber,,,499848,401561,1994
 Co-owned by SSE Group and Cheung Kong Infrastructure Ltd,Seabank Power Ltd,CCGT,CCGT,No,Natural Gas,,1234,HV,England,South West,,,343425,161749,2000
@@ -219,7 +216,6 @@ Ecotricity,Shooters,wind_onshore,Onshore,No,Wind,,2,LV,England,South West,BA34LU
 Ecotricity,Worksop,wind_onshore,Onshore,No,Wind,,2,LV,England,East Midlands,S802PU,,461695,378487,2009
 Ecotricity,Cardiff,wind_onshore,Onshore,No,Wind,,2.3,LV,Wales,Wales,CF32EE,,323460,179215,2011
 Ecotricity,Dundee,wind_onshore,Onshore,No,Wind,,4,LV,Scotland,Scotland,DD88UQ,,269652,688422,2006
-Ecotricity,Ballymena,wind_onshore,Onshore,No,Wind,,4.6,LV,Northern Ireland,Northern Ireland,BT424HZ,,130743,561194,2013
 Ecotricity,Dagenham,wind_onshore,Onshore,No,Wind,,5.9,LV,England,London,RM96SA,,550300,181600,2004
 Ecotricity,Bristol Port,wind_onshore,Onshore,No,Wind,,6,LV,England,South West,BS119DQ,,350907,179457,2007
 Ecotricity,Alveston,wind_onshore,Onshore,No,Wind,,6.9,LV,England,South West,BS353TD,,365450,186055,2017
@@ -293,16 +289,10 @@ EPR,EPR Glanford Ltd,bioenergy,Bioenergy,No,Biomass,Oil,16.7,HV,England,Eastern,
 EPR,Ovenden Moor,wind_onshore,Onshore,No,Wind,,18,LV,England,Yorkshire and Humber,,,404300,430900,1993
 EPR,EPR Ely Ltd,bioenergy,Bioenergy,No,Biomass,Natural Gas,40,HV,England,Eastern,CB62QE,,545000,279900,2001
 EPR,EPR Thetford Ltd,bioenergy,Bioenergy,No,Biomass,Oil,41.5,HV,England,Eastern,IP241LX,,585300,286900,1998
-EPUKi,EP Ballylumford,fossil_fuel,Single cycle,No,Diesel/Gas Oil,,116,HV,Northern Ireland,Northern Ireland,BT403RS,,156969,556595,1974
-EPUKi,EP Kilroot,fossil_fuel,Single cycle,No,Diesel/Gas Oil,,143.2,HV,Northern Ireland,Northern Ireland,BT387LX,,157669,543287,1981
 EPUKi,Lynemouth Power Ltd,bioenergy,Bioenergy,No,Biomass,,420,HV,England,North East,NE639NW,,429850,590374,2018
-EPUKi,EP Kilroot Main Thermal,coal,Conventional steam,No,Coal,Oil,559,HV,Northern Ireland,Northern Ireland,BT387LX,,157669,543287,1981
-EPUKi,EP Ballylumford CCGT,CCGT,CCGT,No,Natural Gas,,616,HV,Northern Ireland,Northern Ireland,BT403RS,,156969,556595,2003
 EPUKi,EP Langage Ltd,CCGT,CCGT,No,Natural Gas,,905,HV,England,South West,PL75AW,,257085,56194,2010
 EPUKi,EP SHB Ltd,CCGT,CCGT,No,Natural Gas,,1365,HV,England,Yorkshire and Humber,DN418BZ,,520457,409164,1997
-ESB,CoolkeeraghESB GT8,fossil_fuel,Single cycle,No,Diesel/Gas Oil,,53,HV,Northern Ireland,Northern Ireland,BT476UL,,64846,584768,1970
 ESB,Corby Power Station,CCGT,CCGT,No,Natural Gas,,407,HV,England,East Midlands,,,488447,266932,1994
-ESB,CoolkeeraghESB C30,CCGT,CCGT,No,Natural Gas,,413,HV,Northern Ireland,Northern Ireland,BT476UL,,64846,584768,2004
 ESB,Carrington Power,CCGT,CCGT,No,Natural Gas,,910,HV,England,North West,M314AY,,373287,393037,2016
 European Energy A/S,Parc Cynog,wind_onshore,Onshore,No,Wind,,3.6,LV,Wales,Wales,,,225500,209500,2001
 European Energy A/S,Pendine Wind Farm Limited,wind_onshore,Onshore,No,Wind,,4.8,LV,Wales,Wales,,,225230,209760,2009
@@ -413,7 +403,6 @@ Greencoat Capital,Westover,solar,PV,No,Solar,,7.0416,LV,England,South East,SP117
 Greencoat Capital,Coombe,solar,PV,No,Solar,,7.27847,LV,England,South West,EX85AZ,,301187,84681,2015
 Greencoat Capital,Stonebarrow,solar,PV,No,Solar,,7.485,LV,England,South West,EX135UL,,334899,98840,2014
 Greencoat Capital,LowerHouse,solar,PV,No,Solar,,8.22369,LV,Wales,Wales,NP151JU,,334870,204817,2016
-Greencoat Capital,Bin Mountain Wind Farm ,wind_onshore,Onshore,No,Wind,,9,LV,Northern Ireland,Northern Ireland,,,57145,558200,2007
 Greencoat Capital,Wilton,solar,PV,No,Solar,,9.48376,LV,England,South West,PL125BX,,231509,58873,2015
 Greencoat Capital,Carnemough,solar,PV,No,Solar,,10.140345,LV,England,South West,TR24EL,,191629,52065,2016
 Greencoat Capital,Earls Hall Farm,wind_onshore,Onshore,No,Wind,,10.25,LV,England,Eastern,,,614550,216860,2013
@@ -434,10 +423,7 @@ Greencoat Capital,Christchurch,solar,PV,No,Solar,,17.92656,LV,England,South West
 Greencoat Capital,Rolleston,solar,PV,No,Solar,,18.003,LV,England,West Midlands,DE139HH,,421291,326955,2015
 Greencoat Capital,Gedulah,solar,PV,No,Solar,,18.33,LV,England,North West,CA73JU,,,,2015
 Greencoat Capital,Bicester,solar,PV,No,Solar,,18.4,LV,England,South East,OX252ND,,459052,218811,2013
-Greencoat Capital,Church Hill,wind_onshore,Onshore,No,Wind,,18.4,LV,Northern Ireland,Northern Ireland,,,31711,543769,2012
 Greencoat Capital,Kildrummy,wind_onshore,Onshore,No,Wind,,18.4,LV,Scotland,Scotland,,,357655,815170,2013
-Greencoat Capital,Slieve Divena 2,wind_onshore,Onshore,No,Wind,,18.8,LV,Northern Ireland,Northern Ireland,,,69602,524593,2017
-Greencoat Capital,Screggagh,wind_onshore,Onshore,No,Wind,,20,LV,Northern Ireland,Northern Ireland,,,54566,520549,2011
 Greencoat Capital,Sixpenny Wood,wind_onshore,Onshore,No,Wind,,20.5,LV,England,Yorkshire and Humber,,,478500,427500,2013
 Greencoat Capital,Thornham,solar,PV,No,Solar,,20.627,LV,England,East,PE365LH,,,,2022
 Greencoat Capital,Gaultney,solar,PV,No,Solar,,21.558,LV,England,East Midlands,NN142SW,,,,2015
@@ -445,18 +431,13 @@ Greencoat Capital,North Rhins,wind_onshore,Onshore,No,Wind,,22,LV,Scotland,Scotl
 Greencoat Capital,Mount Farm,solar,PV,No,Solar,,23.0789,LV,England,,,,,,2016
 Greencoat Capital,Maerdy,wind_onshore,Onshore,No,Wind,,24,LV,Wales,Wales,,,295390,199853,2013
 Greencoat Capital,Aston Clinton,solar,PV,No,Solar,,24.24228,LV,England,South East,HP225DY,,484594,215796,2015
-Greencoat Capital,Tappaghan Wind Farm,wind_onshore,Onshore,No,Wind,,28.5,LV,Northern Ireland,Northern Ireland,,,41015,531174,2005
 Greencoat Capital,Drone Hill,wind_onshore,Onshore,No,Wind,,28.6,LV,Scotland,Scotland,,,383719,667227,2012
 Greencoat Capital,Stroupster,wind_onshore,Onshore,No,Wind,,29.9,LV,Scotland,Scotland,,,334250,966250,2015
-Greencoat Capital,Slieve Divena,wind_onshore,Onshore,No,Wind,,30,LV,Northern Ireland,Northern Ireland,,,69602,524593,2009
 Greencoat Capital,Rose & Crown,solar,PV,No,Solar,,30.107,LV,England,,,,,,2016
-Greencoat Capital,Crighshane,wind_onshore,Onshore,No,Wind,,32.2,HV,Northern Ireland,Northern Ireland,,,29021,542409,2012
 Greencoat Capital,ScottowMoor,solar,PV,No,Solar,,33.68,LV,England,Eastern,NR105FB,,626488,323770,2015
 Greencoat Capital,Tom Nan Clach,wind_onshore,Onshore,No,Wind,,39.1,HV,Scotland,Scotland,,,286500,834500,2019
 Greencoat Capital,Windy Rig,wind_onshore,Onshore,No,Wind,,43.2,HV,England,Scotland,,,,,2021
-Greencoat Capital,Bann Road,solar,PV,No,Solar,,45.75284,LV,Northern Ireland,Northern Ireland,,,111262,571958,2017
 Greencoat Capital,Vine Farm,solar,PV,No,Solar,,45.91605,LV,England,South East,,,,,2016
-Greencoat Capital,Brockaghboy,wind_onshore,Onshore,No,Wind,,47.5,LV,Northern Ireland,Northern Ireland,,,96550,571846,2017
 Greencoat Capital,Glen Kyllachy,wind_onshore,Onshore,No,Wind,,48.5,HV,England,Scotland,,,,,2021
 Greencoat Capital,Eveley,solar,PV,No,Solar,,49.328,LV,England,South East,SO206SA,,432815,133266,2016
 Greencoat Capital,Corriegarth,wind_onshore,Onshore,No,Wind,,69.5,HV,Scotland,Scotland,,,257500,813500,2017
@@ -510,7 +491,6 @@ Lightsource BP,Burnthouse,solar,PV,No,Solar,,4.76238,LV,England,Eastern,PE72HS,,
 Lightsource BP,Bentley Estate,solar,PV,No,Solar,,4.7819,LV,England,South East,BN86PT,,548420,117019,2015
 Lightsource BP,RedHill Farm ,solar,PV,No,Solar,,4.79757,LV,England,South West,TA210DL,,308588,118087,2015
 Lightsource BP,Ibstock,solar,PV,No,Solar,,4.8196,LV,England,West Midlands,, LE676HS,,,2020
-Lightsource BP,Crookedstone,solar,PV,No,Solar,,4.83184,LV,Northern Ireland,Northern Ireland,BT294EH,,129401,538723,2016
 Lightsource BP,Hawton,solar,PV,No,Solar,,4.87702,LV,England,East Midlands,NG243RJ,,479632,348905,2011
 Lightsource BP,Nefyn (Tyddyn Cae),solar,PV,No,Solar,,4.92154,LV,Wales,Wales,LL536DS,,233416,338035,2015
 Lightsource BP,Wick Red Farm,solar,PV,No,Solar,,4.9535,LV,England,South West,BS240HD,,331399,154837,2016
@@ -541,16 +521,9 @@ Lightsource BP,Cold Harbour,solar,PV,No,Solar,,5,LV,England,Yorkshire and Humber
 Lightsource BP,School Aycliffe,solar,PV,No,Solar,,5,LV,England,North East,DL56QE,,426142,523694,2015
 Lightsource BP,Lawrence End Park,solar,PV,No,Solar,,5,LV,England,Eastern,LU28PF,,513149,220690,2015
 Lightsource BP,Sheriffhales,solar,PV,No,Solar,,5,LV,England,West Midlands,TF118QY,,375171,312179,2015
-Lightsource BP,NI Cluster Knockairn Road,solar,PV,No,Solar,,5.39847,LV,Northern Ireland,Northern Ireland,BT294UE,,131013,531722,2017
-Lightsource BP,NI Cluster Lough Road,solar,PV,No,Solar,,5.39904,LV,Northern Ireland,Northern Ireland,BT282PQ,,129148,526209,2017
-Lightsource BP,NI Cluster Hillside,solar,PV,No,Solar,,5.39904,LV,Northern Ireland,Northern Ireland,BT282PQ,,129820,526363,2017
-Lightsource BP,NI Cluster Moira Road,solar,PV,No,Solar,,5.93712,LV,Northern Ireland,Northern Ireland,BT294JL,,129536,531688,2017
-Lightsource BP,Finvoy,solar,PV,No,Solar,,5.9609,LV,Northern Ireland,Northern Ireland,BT448SD,,112523,572478,2017
 Lightsource BP,Little Neath,solar,PV,No,Solar,,6.13505,LV,Wales,Wales,SA715AA,,191001,200291,2015
 Lightsource BP,Langunnett,solar,PV,No,Solar,,6.174,LV,England,South West,PL220NQ,,215569,57824,2013
 Lightsource BP,QE2 Reservoir,solar,PV,No,Solar,,6.33765,LV,England,South East,IG110AD,,512509,167686,2016
-Lightsource BP,Brett Martin,solar,PV,No,Solar,,6.48584,LV,Northern Ireland,Northern Ireland,BT364QU,,141191,538562,2018
-Lightsource BP,Millar Farm,solar,PV,No,Solar,,7.21088,LV,Northern Ireland,Northern Ireland,BT412JJ,,127283,546753,2017
 Lightsource BP,West Farm,solar,PV,No,Solar,,7.63,LV,Wales,Wales,SA724UN,,199608,203981,2013
 Lightsource BP,Hill Farm,solar,PV,No,Solar,,7.6934,LV,Wales,Wales,NP117BB,,319254,192650,2015
 Lightsource BP,Horam,solar,PV,No,Solar,,8.11512,LV,England,South East,TN210JB,,557342,117038,2015
@@ -558,7 +531,6 @@ Lightsource BP,Brook Farm,solar,PV,No,Solar,,8.91036,LV,England,South East,OX251
 Lightsource BP,Epwell,solar,PV,No,Solar,,8.988,LV,England,South East,OX156HF,,436715,241041,2014
 Lightsource BP,Westwood,solar,PV,No,Solar,,9.181,LV,England,South East,CT125AS,,635063,166833,2014
 Lightsource BP,Manston,solar,PV,No,Solar,,9.831,LV,England,South East,CT125AU,,634574,166813,2013
-Lightsource BP,NI Cluster Belfast Road,solar,PV,No,Solar,,9.99189,LV,Northern Ireland,Northern Ireland,BT294TH,,134568,534503,2017
 Lightsource BP,Wrockwardine,solar,PV,No,Solar,,10.46796,LV,England,West Midlands,TF50BJ,,361262,311911,2015
 Lightsource BP,Norrington,solar,PV,No,Solar,,11.145,LV,England,South West,SN128LT,,388259,164933,2014
 Lightsource BP,Knowlton,solar,PV,No,Solar,,11.541,LV,England,South East,CT31PT,,628013,153474,2014
@@ -574,7 +546,6 @@ Lightsource BP,Says Court,solar,PV,No,Solar,,19.807,LV,England,South West,BS362N
 Lightsource BP,Fareham,solar,PV,No,Solar,,20.508,LV,England,South East,PO141AU,,456710,103840,2014
 Lightsource BP,Bury Lane,solar,PV,No,Solar,,22.21587,LV,England,Eastern,SG86DF,,537439,244200,2014
 Lightsource BP,South Creake,solar,PV,No,Solar,,26.001155,LV,England,Eastern,NR219LY,,585483,335992,2016
-Lightsource BP,Maghaberry,solar,PV,No,Solar,,27.099,LV,Northern Ireland,Northern Ireland,BT282PT,,129097,520344,2018
 Lightsource BP,Hill House Farm,solar,PV,No,Solar,,28.31184,LV,England,South West,GL27AN,,375073,204169,2015
 Lightsource BP,Exning,solar,PV,No,Solar,,30.276,LV,England,Eastern,CB80XG,,561429,263931,2015
 Lightsource BP,Goosehall,solar,PV,No,Solar,,43.2216,LV,England,Eastern,CB250BN,,,,2020
@@ -771,10 +742,8 @@ RES Group,Four Burrows Wind Farm (GB),wind_onshore,Onshore,No,Wind,,4.5,LV,Engla
 RES Group,Loscar,wind_onshore,Onshore,No,Wind,,4.5,LV,England,Yorkshire and Humber,,,451000,380000,2010
 RES Group,Goonhilly Solar,solar,PV,No,Solar,,4.51,LV,England,South West,,,169711,21226,2014
 RES Group,Marvel (Stone Farm),solar,PV,No,Solar,,5,LV,England,South East,PO303BQ,,451260,86014,2015
-RES Group,Brackagh Quarry,wind_onshore,Onshore,No,Wind,,5.001,LV,Northern Ireland,Northern Ireland,,,97617,556429,2016
 RES Group,Forss Extension Wind Farm (GB),wind_onshore,Onshore,No,Wind,,5.2,LV,Scotland,Scotland,KW147U,,302000,969500,2007
 RES Group,Dyffryn Brodyn Wind Farm (GB),wind_onshore,Onshore,No,Wind,,5.4,LV,Wales,Wales,SA340JE,,222100,226800,1994
-RES Group,Lendrums Bridge Wind Farm (NI),wind_onshore,Onshore,No,Wind,,5.94,LV,Northern Ireland,Northern Ireland,BT750LL,,63672,512074,2000
 RES Group,South Sharpley Wind Farm,wind_onshore,Onshore,No,Wind,,6,LV,England,North East,,,438490,549675,2011
 RES Group,Burnthouse Windfarm,wind_onshore,Onshore,No,Wind,,6,LV,England,Eastern,,,533458,295082,2013
 RES Group,Pen Bryn Oer Wind Farm,wind_onshore,Onshore,No,Wind,,6,LV,Wales,Wales,,,312065,209235,2017
@@ -783,8 +752,6 @@ RES Group,Ferndale Wind Farm,wind_onshore,Onshore,No,Wind,,6.4,HV,Wales,Wales,,,
 RES Group,Auquhirie Land ,wind_onshore,Onshore,No,Wind,,6.9,HV,Scotland,Scotland,AB393XB,,328500,785500,2013
 RES Group,Parsonage (Hazel),solar,PV,No,Solar,,7,LV,England,South West,TA199EF,,336700,115500,2013
 RES Group,Four Burrows Solar (Kenwyn),solar,PV,No,Solar,,7.2,LV,England,South West,TR48JB,,176372,48050,2015
-RES Group,Lendrums Bridge Extension Wind Farm (NI),wind_onshore,Onshore,No,Wind,,7.3,LV,Northern Ireland,Northern Ireland,BT750LL,,54170,517391,2002
-RES Group,Lough Hill Wind Farm (NI),wind_onshore,Onshore,No,Wind,,7.8,LV,Northern Ireland,Northern Ireland,BT817SL,,38467,541020,2007
 RES Group,Ramsey 2 Wind Farm,wind_onshore,Onshore,No,Wind,,8,LV,England,Eastern,,,527814,286445,2013
 RES Group,Mynydd Brombil,wind_onshore,Onshore,No,Wind,,8,LV,Wales,Wales,,,279141,188569,2017
 RES Group,Pencoose,solar,PV,No,Solar,,8.14,LV,England,South West,,SW728379,173927,37998,2015
@@ -802,7 +769,6 @@ RES Group,Meikle Carewe Wind Farm (GB),wind_onshore,Onshore,No,Wind,,10.2,LV,Sco
 RES Group,Bilsthorpe,wind_onshore,Onshore,No,Wind,,10.25,LV,England,East Midlands,,,466000,362000,2013
 RES Group,Penare,solar,PV,No,Solar,,11.1,LV,England,South West,TR49DG,,181089,49385,2014
 RES Group,Derriton (Tamar Heights),solar,PV,No,Solar,,11.7,LV,England,South West,EX226JX,,233249,103010,2014
-RES Group,Altahullion Extension Wind Farm (NI),wind_onshore,Onshore,No,Wind,,11.7,LV,Northern Ireland,Northern Ireland,BT474NS,,78039,574408,2007
 RES Group,UK Solar (Lower Newton) LLP,solar,PV,No,Solar,,11.92,LV,England,West Midlands,,SJ988386,398731,338883,2014
 RES Group,Goonhilly Downs Wind Farm,wind_onshore,Onshore,No,Wind,,12,LV,England,South West,,,171000,21200,2008
 RES Group,Tallentire Wind Farm (GB),wind_onshore,Onshore,No,Wind,,12,LV,England,North West,CA130QA,,312500,535500,2013
@@ -832,9 +798,7 @@ RES Group,Parley,solar,PV,No,Solar,,24.2,LV,England,South West,BH236BG,,409877,9
 RES Group,Hall Farm Wind Farm,wind_onshore,Onshore,No,Wind,,24.6,HV,England,Yorkshire and Humber,,,507865,443185,2013
 RES Group,Little Raith (GB),wind_onshore,Onshore,No,Wind,,24.8,LV,Scotland,Scotland,KY50AX,,,,2020
 RES Group,Minnygap (GB),wind_onshore,Onshore,No,Wind,,25,HV,Scotland,Scotland,DG109PX,,307313,597397,2017
-RES Group,Castle Craig,wind_onshore,Onshore,No,Wind,,25,LV,Northern Ireland,Northern Ireland,BT817SN,,39597,540549,2018
 RES Group,Glenchamber Wind Farm (GB),wind_onshore,Onshore,No,Wind,,25.3,LV,Scotland,Scotland,DG80PB,,224474,564039,2016
-RES Group,Altahullion Wind Farm (NI),wind_onshore,Onshore,No,Wind,,26,LV,Northern Ireland,Northern Ireland,BT474NS,,78039,574408,2003
 RES Group,Glens of Foudland,wind_onshore,Onshore,No,Wind,,26,LV,Scotland,Scotland,,,361496,837303,2009
 RES Group,Dungavel,wind_onshore,Onshore,No,Wind,,26,HV,Scotland,Scotland,,,267954,636995,2015
 RES Group,Wryde Croft Wind Farm (GB),wind_onshore,Onshore,No,Wind,,26,LV,England,Eastern,PE60TP,,532606,307038,2016
@@ -945,11 +909,7 @@ Scira Offshore Energy,Dudgeon BMU 4,wind_offshore,Offshore,No,Wind,,102,HV,Engla
 Scira Offshore Energy,Dudgeon BMU 1,wind_offshore,Offshore,No,Wind,,108,HV,England,Eastern,,,575000,361000,2017
 Scira Offshore Energy,Sheringham Shoal BMU 1,wind_offshore,Offshore,No,Wind,,158,HV,England,Eastern,,,610671,364425,2012
 Scira Offshore Energy,Sheringham Shoal BMU 2,wind_offshore,Offshore,No,Wind,,158,HV,England,Eastern,,,610671,364425,2012
-Scottish Power,Corkey,wind_onshore,Onshore,No,Wind,,5,LV,Northern Ireland,Northern Ireland,BT449JB,,126222,580523,1995
-Scottish Power,Elliot's Hill,wind_onshore,Onshore,No,Wind,,5,LV,Northern Ireland,Northern Ireland,BT390TD,,134974,546006,1995
-Scottish Power,Rigged Hill,wind_onshore,Onshore,No,Wind,,5,LV,Northern Ireland,Northern Ireland,BT490QJ,,90731,589745,1995
 Scottish Power,Carland Cross PV,solar,PV,No,Solar,,10,LV,England,South West,TR85JB,,,,2022
-Scottish Power,Wolf Bog,wind_onshore,Onshore,No,Wind,,10,LV,Northern Ireland,Northern Ireland,BT390TD,,137865,553129,2008
 Scottish Power,Middleton,wind_onshore,Onshore,No,Wind,,12,LV,Scotland,Scotland,G776PZ,,253158,656019,2013
 Scottish Power,Hare Hill I,wind_onshore,Onshore,No,Wind,,13.2,LV,Scotland,Scotland,KA184NW,,265320,609703,2000
 Scottish Power,Ewe Hill I,wind_onshore,Onshore,No,Wind,,13.8,LV,Scotland,Scotland,DG112QG,,315000,580000,2016
@@ -957,7 +917,6 @@ Scottish Power,Clachan Flats,wind_onshore,Onshore,No,Wind,,15.03,HV,Scotland,Sco
 Scottish Power,Hagshaw Hill I,wind_onshore,Onshore,No,Wind,,15.6,LV,Scotland,Scotland,ML110RR,,278980,630740,1996
 Scottish Power,Coldham,wind_onshore,Onshore,No,Wind,,16,LV,England,Eastern,PE14OLX,,525748,299048,2005
 Scottish Power,Coal Clough RP,wind_onshore,Onshore,No,Wind,,16,LV,England,North West,BB104RR,,390207,428154,2014
-Scottish Power,Callagheen,wind_onshore,Onshore,No,Wind,,16.9,LV,Northern Ireland,Northern Ireland,BT934AL,,10820,521167,2006
 Scottish Power,Dun Law I,wind_onshore,Onshore,No,Wind,,17.16,LV,Scotland,Scotland,TD26RA,,344600,657500,2000
 Scottish Power,Wether Hill,wind_onshore,Onshore,No,Wind,,18.2,LV,Scotland,Scotland,DG73UG,,270000,594000,2007
 Scottish Power,Carland Cross RP,wind_onshore,Onshore,No,Wind,,20,LV,England,South West,TR85JB,,184500,54500,2013
@@ -1007,7 +966,6 @@ SSE Group,Quoich Dam - A,hydro,Natural Flow,No,Hydro,,0.32,LV,Scotland,Scotland,
 SSE Group,Cluanie Dam  - A,hydro,Natural Flow,No,Hydro,,0.32,LV,Scotland,Scotland,,NH185099,218164.204,809842.5173,1956
 SSE Group,Vaich Power Station,hydro,Natural Flow,No,Hydro,,0.32,LV,Scotland,Scotland,,NH321726,234419.6788,875106.5866,1956
 SSE Group,Misgeach Power Station - A,hydro,Natural Flow,No,Hydro,,0.35,LV,Scotland,Scotland,,NH183381,229571.0183,838608.3761,1963
-SSE Group,SSE Arena Belfast,solar,PV,No,Solar,,0.41992,LV,Northern Ireland,Northern Ireland,,NW473302,147232,530243,2017
 SSE Group,"Duchally Power Station - A,C,E",hydro,Natural Flow,No,Hydro,,0.45,LV,Scotland,Scotland,,NC368203,238694.1282,916750.919,1959
 SSE Group,"Loyne Power Station - A,C",hydro,Natural Flow,No,Hydro,,0.55,LV,Scotland,Scotland,,NH200079,228554.8898,813307.0187,1956
 SSE Group,Trinafour Power Station - A,hydro,Natural Flow,No,Hydro,,0.55,LV,Scotland,Scotland,,NN725648,270988.1369,765725.1915,1959
@@ -1039,7 +997,6 @@ SSE Group,"Kingairloch Power Station - A,C",hydro,Natural Flow,No,Hydro,,3.5,LV,
 SSE Group,"Dalchonize Power Station-A,C ",hydro,Natural Flow,No,Hydro,,4,LV,Scotland,Scotland,,NN740220,274035,721990,1958
 SSE Group,Lubreoch Power Station - A,hydro,Natural Flow,No,Hydro,,4,LV,Scotland,Scotland,,NN454418,245250.9583,741685.3646,1958
 SSE Group,"Sron Mor Power Station - A,C",hydro,Natural Flow,No,Hydro,,5,LV,Scotland,Scotland,,NN161201,264850,798415,1957
-SSE Group,Bessy Bell Windfarm,wind_onshore,Onshore,No,Wind,,5,LV,Northern Ireland,Northern Ireland,BT784EZ,,49687,547922,1995
 SSE Group,Foyers Falls Power Station,hydro,Natural Flow,No,Hydro,,5.2,LV,Scotland,Scotland,,NH497210,249845,820010,1968
 SSE Group,Allt Na Lairige Power Station,hydro,Natural Flow,No,Hydro,,6,LV,Scotland,Scotland,,NN231164,220655,714679,1956
 SSE Group,"Loch Gair Power Station - A,C",hydro,Natural Flow,No,Hydro,,6,LV,Scotland,Scotland,,NR925908,192865,691305,1961
@@ -1048,7 +1005,6 @@ SSE Group,"Fasnakyle Compensation Generator - A, C",hydro,Natural Flow,No,Hydro,
 SSE Group,Gaur Power Station - A,hydro,Natural Flow,No,Hydro,,7.9,LV,Scotland,Scotland,,NN464579,247261.3339,757140.6313,1953
 SSE Group,Striven Power Station - A,hydro,Natural Flow,No,Hydro,,8,LV,Scotland,Scotland,,NS056840,205595,683990,1951
 SSE Group,Thatcham,fossil_fuel,Single cycle,No,Diesel/Gas Oil,,9,HV,England,South East,RG194PP,,451330,157079,1994
-SSE Group,Bessy Bell Windfarm (NI) Limited,wind_onshore,Onshore,No,Wind,,9,LV,Northern Ireland,Northern Ireland,H395815,,51953,543825,2008
 SSE Group,"Cassley Power Station - A,C,E",hydro,Natural Flow,No,Hydro,,10,LV,Scotland,Scotland,,NC396232,247325,901540,1959
 SSE Group,Arnish,fossil_fuel,Single Cycle,No,Diesel/Gas Oil,,10,HV,Scotland,Scotland,,,142229,930499,2000
 SSE Group,Spurness Wind Farm II,wind_onshore,Onshore,No,Wind,,10,LV,Scotland,Scotland,,HY606356,360531,1033828,2012
@@ -1079,7 +1035,6 @@ SSE Group,Toddleburn Windfarm,wind_onshore,Onshore,No,Wind,,27.6,HV,Scotland,Sco
 SSE Group,"Artfield Fell Windfarm - A,C",wind_onshore,Onshore,No,Wind,,28.6,LV,Scotland,Scotland,,NX236659,223005,567000,2005
 SSE Group,Tummel,hydro,Natural Flow,No,Hydro,,34,LV,Scotland,Scotland,PH165SB,,261249.1532,580838.546,1933
 SSE Group,Luichart,hydro,Natural Flow,No,Hydro,,34,HV,Scotland,Scotland,IV149EW,,231809.6871,862261.3366,1954
-SSE Group,Tievenameenta Wind Farm,wind_onshore,Onshore,No,Wind,,34.5,LV,Northern Ireland,Northern Ireland,,NV288423,28892,543668,2016
 SSE Group,Slough Heat & Power,bioenergy,Bioenergy,Yes,Biomass,,35,LV,England,South East,SL14TT,,495316,181476,2014
 SSE Group,Drumderg Windfarm,wind_onshore,Onshore,No,Wind,,36.8,LV,Scotland,Scotland,,NO180538,324500,748500,2008
 SSE Group,Glenmoriston,hydro,Natural Flow,No,Hydro,,37,HV,Scotland,Scotland,IV36YH,,230869.8249,812928.107,1957
@@ -1098,7 +1053,6 @@ SSE Group,Lerwick,fossil_fuel,Single cycle,No,Diesel/Gas Oil,,67,LV,Scotland,Sco
 SSE Group,Keadby Wind Farm,wind_onshore,Onshore,No,Wind,,68,LV,England,Yorkshire and Humber,,SE829126,481890,413515,2013
 SSE Group,Fasnakyle,hydro,Natural Flow,No,Hydro,,69,HV,Scotland,Scotland,,NH319296,226977.9735,827215.1828,1951
 SSE Group,Gordonbush Wind Farm,wind_onshore,Onshore,No,Wind,,70,HV,Scotland,Scotland,,NC826113,284500,909500,2011
-SSE Group,Slieve Kirk Windfarm,wind_onshore,Onshore,No,Wind,,73.6,HV,Northern Ireland,Northern Ireland,BT473RL,,61258,571215,2011
 SSE Group,Errochty,hydro,Natural Flow,No,Hydro,,75,HV,Scotland,Scotland,PH165SD,,280853.2565,765408.1951,1955
 SSE Group,Dunmaglass Wind Farm,wind_onshore,Onshore,No,Wind,,94.05,HV,Scotland,Scotland,,NH609227,264000,820120,2016
 SSE Group,Glendoe Hydro Power Station,hydro,Natural Flow,No,Hydro,,100,HV,Scotland,Scotland,,NH406079,238719.4065,808777.049,2008
@@ -1181,7 +1135,6 @@ Toucan Energy Services,Shuttleworth,solar,PV,No,Solar,,4.99908,LV,England,North 
 Toucan Energy Services,Burnham Wick,solar,PV,No,Solar,,4.9992,LV,England,Eastern,CM08LU,,596876,195875,2015
 Toucan Energy Services,Guston,solar,PV,No,Solar,,4.99928,LV,England,South East,CT155EW,,632877,144096,2015
 Toucan Energy Services,Five Oaks,solar,PV,No,Solar,,4.99974,LV,England,South East,RH149AZ,,509003,130058,2016
-Toucan Energy Services,Carrowdore,solar,PV,No,Solar,,5.98158,LV,Northern Ireland,Northern Ireland,BT222HH,,169400,525454,2017
 Toucan Energy Services,Isle of Wight,solar,PV,No,Solar,,6.22644,LV,England,South East,PO334RW,,452614,90511,2015
 Toucan Energy Services,Rhydypandy,solar,PV,No,Solar,,6.38011,LV,Wales,Wales,SA66NX,,265957,200658,2015
 Toucan Energy Services,Place Farm,solar,PV,No,Solar,,6.79167,LV,England,South East,TN262LX,,597181,132855,2015
@@ -1200,7 +1153,6 @@ Toucan Energy Services,Littlewood,solar,PV,No,Solar,,13.728,LV,England,South Eas
 Toucan Energy Services,Malmaynes,solar,PV,No,Solar,,14.82624,LV,England,South East,ME39SQ,,580664,175335,2015
 Toucan Energy Services,Welbeck,solar,PV,No,Solar,,16.03844,LV,England,East Midlands,NG229EY,,460619,372696,2015
 Toucan Energy Services,Aston House,solar,PV,No,Solar,,19.82662,LV,England,East Midlands,,"DE65AG		",416833,331778,2015
-Toucan Energy Services,Lisburn,solar,PV,No,Solar,,20.5,LV,Northern Ireland,Northern Ireland,BT282SL,,134798,521384,2017
 Toucan Energy Services,Grange Farm,solar,PV,No,Solar,,21.09844,LV,England,South West,BS361RR,,363968,182366,2014
 Toucan Energy Services,Stowbridge,solar,PV,No,Solar,,24.323,LV,England,Eastern,CB63LF,,551252,272416,2014
 Toucan Energy Services,Morton Solar,solar,PV,No,Solar,,28.09536,LV,England,East Midlands,DN228HD,,467120,379462,2015
@@ -1308,7 +1260,6 @@ WPO UK Services,Far Danes,solar,PV,No,Solar,,11.7,LV,England,East Midlands,,SK86
 WPO UK Services,Dummuies,wind_onshore,Onshore,No,Wind,,12.25,LV,Scotland,Scotland,,NJ5635836050,,,2007
 WPO UK Services,Combermere,solar,PV,No,Solar,,13.97,LV,England,North West,,SJ6003644925,,,2015
 WPO UK Services,Grange,solar,PV,No,Solar,,14,LV,England,East Midlands,,TF3932618855,545055,318754,2013
-WPO UK Services,Altaveedan,wind_onshore,Onshore,No,Wind,,18,HV,Northern Ireland,Northern Ireland,,NW2793786653,126801,584314,2016
 WPO UK Services,Airies,wind_onshore,Onshore,No,Wind,,39.9,HV,Scotland,Scotland,,NX2662767127,226000,568000,2017
 XceCo,Inner Dowsing Wind Farm,wind_offshore,Offshore,No,Wind,,97.2,HV,England,East Midlands,,TF536655,563561,368447,2008
 XceCo,Lynn Wind Farm,wind_offshore,Offshore,No,Wind,,97.2,HV,England,East Midlands,,TF536655,564095,362638,2008

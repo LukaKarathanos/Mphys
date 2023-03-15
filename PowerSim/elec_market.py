@@ -27,13 +27,14 @@ class Market:
         plants must be ordered. sets the amount the plants have supplied. 
         '''
         filled = False
+        bid_percent_increase = 1.2
         total_bought = 0
         strike_price = 0
         bids = []
         plants_selected = []
         for plant in plants_to_fill:
             if plant.is_operating:
-                bid_price = plant.variable_costs_per_MWH
+                bid_price = plant.variable_costs_per_MWH*bid_percent_increase
                 gen_amount:float = plant.get_capacity_factor(hour, day)*plant.capacity_MW
                 if filled: 
                     plant.energy_supplied_per_hour.append(0)
