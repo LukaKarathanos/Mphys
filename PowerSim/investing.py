@@ -20,6 +20,15 @@ class ProfitCalculator:
         return npv
     
     @staticmethod
+    def calculate_npv_proper(plant: PowerPlant, forecast_cashflow, discount_rate: float = 0.05) -> float:
+        '''Calculates NPV per mw of capacity'''
+        cashflow = np.full(plant.operational_length_years, forecast_cashflow)
+        buildcost_cashflow = np.full(plant.construction_length, -plant.build_costs/plant.construction_length)
+        cashflow = np.insert(cashflow, 0, buildcost_cashflow)
+        npv = npf.npv(discount_rate, cashflow)
+        return npv
+    
+    @staticmethod
     def calculate_running_npv(plant: PowerPlant, discount_rate):
         '''Calculate npv'''
 

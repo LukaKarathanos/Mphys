@@ -4,12 +4,12 @@ import os
 import sys 
 
 import numpy as np
-import pickle
-import multiprocessing
-import functools
+
+import pandas as pd 
 
 from world_model import WorldModel
-import data
+import plant_data
+
 
 current_time = int(time.time())
 process_id = os.getpid()
@@ -23,7 +23,7 @@ seed = current_time * job_id
 random.seed(seed)
 
 def run(
-        plant_data, 
+        plant_data_df, 
         plant_cost_data,
         n_years,
         n_days,
@@ -32,19 +32,21 @@ def run(
     #initialise world. generate the plants
     if seed is not None:
         random.seed(seed)
-        
-    list_of_plants = data.generate_plants_from_data(plant_data, plant_cost_data)
+
+    plant_generator = plant_data.plant_generator()    
+
+    list_of_plants = plant_generator.generate_plants_from_data(plant_data_df, plant_cost_data, ol_extension=10)
 
 
     world = WorldModel(
             power_plants =  list_of_plants,
-            buildable_plant_data = plant_data,
+            buildable_plant_data = plant_data_df,
             plant_cost_data = plant_cost_data,
             n_years = n_years,
             n_days = n_days
     )
 
-    world.initialise_gen_cos()
+    #world.initialise_gen_cos()
     total_per_tech = []
     tech_types = ['nuclear', 'coal', 'fossil_fuel', 'bioenergy', 'wind_onshore', 'wind_offshore', 'solar', 'hydro', 'CCGT']
 
@@ -57,10 +59,9 @@ def run(
             energy = [(plant.energy_supplied_per_hour[-(24*world.n_days):]) for plant in plant_list if plant.technology == tech and len(plant.energy_supplied_per_hour) >= 24]
             energy = np.sum(energy, axis = 0)
             y_total_per_tech.append(energy)
-
         total_per_tech.append(y_total_per_tech)
         # print(world.get_demand())
-        #print(f'year {i} complete')
+        print(f'year {i} complete')
 
 
     #The plot -> configured properly
@@ -77,9 +78,9 @@ def run(
     monies = np.array([genco.cash for genco in world.get_elec_cos()])
     #print(np.shape(total_per_tech))
 
-    np.save(f'data/{scenario_name}/tech/total_per_tech_{job_id}.npy', total_per_tech)
-    np.save(f'data/{scenario_name}/price/all_strike_prices_{job_id}.npy', all_strike_prices)
-    np.save(f'data/{scenario_name}/monies/all_strike_prices_{job_id}.npy', monies)
+    np.save(f'data/{scenario_name}/{job_id}_total_per_tech.npy', total_per_tech)
+    np.save(f'data/{scenario_name}/{job_id}_all_strike_prices.npy', all_strike_prices)
+    np.save(f'data/{scenario_name}/{job_id}monies.npy', monies)
 
 
     return total_per_tech  #world.all_strike_prices, world.average_yearly_prices, 
@@ -91,11 +92,11 @@ run once
 
 if __name__ == '__main__':
     n_years = 30
-    n_days = 24
-    scenario_name = '5almostworking'
+    n_days = 12
+    scenario_name = '3test'
 
-    run(data.DUKES_plants_df,
-        data.plant_costs_df,
+    run(plant_data.DUKES_plants_df,
+        plant_data.plant_costs_df,
         n_years,
         n_days)
 

@@ -43,10 +43,16 @@ class DemandAgent(mesa.Agent):
         grouped_df = df24.groupby('settlement_period').agg(['mean', 'median', 'std'])
 
         self.demand_df = grouped_df
+        
+        '''this gives demand in world model. should change.'''
+        self.hourly_demand_MW = self.demand_df['tsd']['mean'].values
 
-        self.hourly_demand_MW = self.demand_df['nd']['mean'].values
+        '''change. this is not called'''
+        self.daily_demand = None
 
-        #print(grouped_df)
+        '''change this in future. I have the historical demand stuff.'''
+        self.historical_average_demand_list = [self.hourly_demand_MW.mean()]*10
+
 
         
 
@@ -61,6 +67,7 @@ class DemandAgent(mesa.Agent):
     
     def step(self):
         self.increasing_demand()
+        self.historical_average_demand_list.append(self.hourly_demand_MW.mean())
 
 
 
