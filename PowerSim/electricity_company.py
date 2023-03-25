@@ -82,7 +82,7 @@ class ElecCo(mesa.Agent):
             y_to_operate: float = plant.operational_length_years + plant.construction_end_date - self.model.current_year
             plant_val = (y_to_operate/plant.operational_length_years)*plant.build_costs
             c += plant_val
-        self.cash = c*0.2
+        self.cash = c*0.
     
     def get_paid(self, days_prices: list):
         '''Pay itself the net profit/loss from all the plants in the day. Assuming costs don't change during the day'''

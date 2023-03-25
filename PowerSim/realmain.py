@@ -92,7 +92,7 @@ run once
 
 if __name__ == '__main__':
     n_years = 30
-    n_days = 12
+    n_days = 4
     scenario_name = '3test'
 
     run(plant_data.DUKES_plants_df,

@@ -45,10 +45,12 @@ fuel_list = [coal, gas, biomass, none]
 
 @dataclass
 class CarbonTax():
-    carbon_tax: float
+    starting_carbon_tax: float
     exponential_tax_increase: float = 1
+    carbon_tax: float = None
+
     def set_carbon_tax(self, year: int):
-        self.carbon_tax = self.exponential_tax_increase**(year)*self.carbon_tax 
+        self.carbon_tax =  self.exponential_tax_increase**(year)*self.starting_carbon_tax 
 
 carbon_tax = CarbonTax(50, 1.02)
 # def get_gas_price_per_MWh(year):

@@ -32,7 +32,7 @@ class WorldModel(mesa.Model):
         historical_strike_prices: List[float] = plant_data.historical_price_data,
         demand_variance: float = 500.0,
         data_folder = 'Data_out',
-        downpayment_percent = 0.1,
+        downpayment_percent = 0.3,
         number_can_build = 5
 
         ):

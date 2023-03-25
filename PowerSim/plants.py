@@ -1,5 +1,6 @@
 from abc import ABC
 from dataclasses import dataclass, field
+from functools import lru_cache
 import random
 import numpy as np
 
@@ -84,7 +85,7 @@ class PowerPlant():
         ''' Using the plant type calculate the variable costs'''
 
         if self.technology == 'CCGT' or self.technology == 'bioenergy' or self.technology == 'coal' or self.technology == 'fossil_fuel':
-            c = (self.fuel.fuel_price + self.get_carbon_tax())*1/self.fuel_effeciency + self.variable_maintenance_per_MWh
+            c = (self.fuel.fuel_price + self.get_carbon_tax(self.fuel))*1/self.fuel_effeciency + self.variable_maintenance_per_MWh
             return c
 
         else:
@@ -107,9 +108,9 @@ class PowerPlant():
             else:
                 return self.load_factors
 
-    def get_carbon_tax(self):
+    def get_carbon_tax(self, fuel:fuels.Fuel):
         ''' Tax per mwh of fuel used'''
-        carbon_per_mwh = self.fuel.carbon_density/self.fuel.energy_density
+        carbon_per_mwh = fuel.carbon_density/fuel.energy_density
         tax_per_mwh = fuels.carbon_tax.carbon_tax*carbon_per_mwh
         return tax_per_mwh
 
