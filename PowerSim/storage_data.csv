@@ -1,0 +1,3 @@
+﻿technology,production_capacity_MW,storage_capacity_MW,reserve_capacity_MWh,eff_store,eff_gen,eff_transmission
+pumped_hydro,1,1,6,0.8,0.9,0.95
+battery,1,1,2,0.95,0.95,1

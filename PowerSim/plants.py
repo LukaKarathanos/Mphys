@@ -6,6 +6,7 @@ import numpy as np
 
 import fuels
 from capacity_factors import capacity_factors
+from predictor import Forecast
 
 @dataclass(init=True, order = True)
 class PowerPlant(): 
@@ -29,9 +30,10 @@ class PowerPlant():
     # sort_index: float = field(init=False)
     name: str
     technology: str
-    company: str
+    company_name: str
     capacity_MW: float
-
+    
+    company = None 
     construction_length: int = 5
     construction_start_date: int = 2023
     construction_end_date: int = 2023
@@ -113,4 +115,73 @@ class PowerPlant():
         carbon_per_mwh = fuel.carbon_density/fuel.energy_density
         tax_per_mwh = fuels.carbon_tax.carbon_tax*carbon_per_mwh
         return tax_per_mwh
+    
 
+@dataclass
+class StoragePlant:
+    ''' Defines storage plants (pumped hydro and battery)
+        Production and storage capacities are the amount that can be given/taken from the grid.
+        reserve 
+
+        maybe change current reserves to change each day idk.
+    '''
+    name: str
+    technology: str
+    company_name: str
+    capacity: int
+    production_capacity_MW_ratio: float
+    storage_capacity_MW_ratio: float
+    reserve_capacity_MWh_ratio: float
+    gen_eff:float
+    store_eff: float
+    transmission_efficiency: float 
+
+    company = None 
+    current_reserves_MWh: float = None
+
+    target_final_reserve_fraction = 0.5
+    energy_supplied_per_hour: list = field(default_factory=lambda:[])
+
+    # construction_length: int = 5
+    # construction_start_date: int = 2023
+    # construction_end_date: int = 2023
+    # operational_length_years: float = 40
+    # variable_costs_per_MWH: float = 100
+    # fixed_costs_per_H: float = 10000
+    # build_costs: float = 200000000
+    # load_factor: float = 1.0
+    # variable_maintenance_per_MWh: float = 5
+    # is_operating: bool = False
+    # interest_rate = 0.075
+    # yearly_debt_payment = 0
+    # npv = None
+    # being_built = False
+
+    def __post_init__(self):
+        self.current_reserves_MWh_ratio = self.target_final_reserve_fraction*self.reserve_capacity_MWh_ratio
+        self.set_storage_amount(self.capacity)
+
+    def set_storage_amount(self, cap):
+        self.capacity  = cap
+        self.production_capacity_MW =cap*self.production_capacity_MW_ratio
+        self.storage_capacity_MW = cap*self.storage_capacity_MW_ratio
+        self.reserve_capacity_MWh = cap*self.reserve_capacity_MWh_ratio
+        self.current_reserves_MWh = cap*self.current_reserves_MWh_ratio
+
+    def get_days_production(self, predicted_prices):
+        prices = tuple(predicted_prices)
+        NH = len(predicted_prices)
+        prod = Forecast.storage_production(
+            NH = NH, 
+            Emax = self.production_capacity_MW,
+            Smax = self.storage_capacity_MW,
+            prices = prices,
+            h = self.transmission_efficiency,
+            R0 = self.current_reserves_MWh,
+            Rmax=self.reserve_capacity_MWh,
+            eff_g=self.gen_eff,
+            eff_st=self.store_eff, 
+            f= self.target_final_reserve_fraction
+        )
+
+        return prod[:24]

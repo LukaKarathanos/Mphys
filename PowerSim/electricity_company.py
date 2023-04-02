@@ -35,8 +35,8 @@ class ElecCo(mesa.Agent):
         self.model = model
         self.lookforward_time = lookforward_time
         self.lookback_time = lookback_time
-
-
+        self.bid_increase_factor = np.random.uniform(1,1.25)
+        self.n_days = 6
     def invest_better(self, predicted_prices: np.ndarray, buildable_plants: List[PowerPlant], downpayment_percent: float):
         ''' Uses a predicted electricity price per year to invest. Checks if company has enough money for the downpayment.
         picks highest npv per pound.
@@ -82,7 +82,7 @@ class ElecCo(mesa.Agent):
             y_to_operate: float = plant.operational_length_years + plant.construction_end_date - self.model.current_year
             plant_val = (y_to_operate/plant.operational_length_years)*plant.build_costs
             c += plant_val
-        self.cash = c*0.
+        self.cash = c*0.5
     
     def get_paid(self, days_prices: list):
         '''Pay itself the net profit/loss from all the plants in the day. Assuming costs don't change during the day'''
@@ -92,7 +92,7 @@ class ElecCo(mesa.Agent):
             if plant.is_operating: 
                 production = np.array(plant.energy_supplied_per_hour[-24:])
                 total_production = production + total_production
-                costs += np.sum(production*plant.variable_costs_per_MWH)# + plant.fixed_costs_per_H*24       
+                costs += np.sum(production*plant.variable_costs_per_MWH) + plant.fixed_costs_per_H*24       
         price = np.array(days_prices)
         revenue = np.sum(price*total_production)
         # print(revenue)
@@ -121,14 +121,10 @@ class ElecCo(mesa.Agent):
         '''
         self.set_whether_plants_operate(self.model.current_year)
         self.pay_debts()
-        buildable_plants = self.model.buildable_plants
+        self.bid_increase_factor = np.random.uniform(1,1.25)
+        buildable_plants = self.model.get_buildable_plants()
 
         plants_to_build = self.invest_proper(buildable_plants, self.model.downpayment_percent)
-
-        '''Try old method'''
-        # strike_price = self.model.average_strike_price
-        # predicted_prices = Forecast.historical(self.model.average_yearly_prices)
-        # plants_to_build = self.invest_better(predicted_prices, buildable_plants, 0.1)
 
         if plants_to_build is not None:     
             #adds plant to the build queue
@@ -136,7 +132,7 @@ class ElecCo(mesa.Agent):
                 if self.cash > plant.build_costs*self.model.downpayment_percent:        
                     plant.construction_start_date = self.model.current_year
                     plant.construction_end_date = plant.construction_start_date + plant.construction_length
-                    plant.company = self.name
+                    plant.company = self
                     plant.yearly_debt_payment = ProfitCalculator.calculate_yearly_debt(plant, self.model.downpayment_percent, plant.interest_rate)
 
                     # add plants to the lists of plants they are part of. Plants are never removed. 
@@ -177,7 +173,7 @@ class ElecCo(mesa.Agent):
         fuels.carbon_tax.set_carbon_tax(year_since_start)
 
 
-        random_day_list, price_list = self.model.predicted_year_step(predicted_average_demand, self.lookforward_time)
+        random_day_list, price_list = self.model.predicted_year_step(predicted_average_demand, self.lookforward_time, self.n_days)
 
         ''''set capacity factor '''
 
@@ -213,8 +209,8 @@ class ElecCo(mesa.Agent):
 
        
         if len(viable_plants) != 0:
-            best_plants = sorted(viable_plants, key = lambda obj: obj.npv/obj.build_costs)
-            return best_plants[:5]
+            best_plants = sorted(viable_plants, key = lambda obj: obj.npv/obj.build_costs, reverse = True)
+            return best_plants
         
         else:
             return None

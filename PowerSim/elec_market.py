@@ -27,13 +27,13 @@ class Market:
         plants must be ordered. sets the amount the plants have supplied if predict is false. 
         '''
         filled = False
-        bid_percent_increase = 1.2
         total_bought = 0
         strike_price = 0
         bids = []
+
         for plant in plants_to_fill:
             if plant.is_operating:
-                bid_price = plant.variable_costs_per_MWH*bid_percent_increase
+                bid_price = plant.variable_costs_per_MWH*plant.company.bid_increase_factor
                 gen_amount:float = plant.get_capacity_factor(plant.technology)[hour]*plant.capacity_MW
                 if filled: 
                     if not predict:
