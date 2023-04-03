@@ -100,4 +100,3 @@ class plant_generator:
             )
             p_list.append(plant)
         return p_list 
-
